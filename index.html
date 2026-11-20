@@ -395,7 +395,7 @@
             font-style: italic;
         }
 
-        /* BIOGRAFIA TIMELINE - CLEAN & ALIGNED */
+        /* BIOGRAFIA TIMELINE */
         .timeline {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -533,29 +533,33 @@
         }
 
         /* ==========================================
-           INTERACTIVE WORLD MAP WITH POP-OUT INFO FROM POINT
+           CINEMATIC ZOOM WORLD MAP WITH PIN POPOVER
            ========================================== */
         .route-card {
-            padding: 26px;
+            padding: 24px;
             background: linear-gradient(145deg, rgba(14, 18, 32, 0.86), rgba(8, 10, 18, 0.95));
             border: 1px solid rgba(226, 184, 87, 0.25);
-        }
-
-        .map-stage-wrapper {
-            position: relative;
-            width: 100%;
         }
 
         .map-viewport {
             position: relative;
             width: 100%;
             aspect-ratio: 2 / 1;
-            min-height: 260px;
+            min-height: 290px;
             border-radius: 20px;
             background: radial-gradient(circle at 50% 45%, rgba(20, 35, 60, 0.48), rgba(6, 8, 15, 0.98) 85%);
             border: 1px solid rgba(255, 255, 255, 0.12);
             overflow: hidden;
             box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.75);
+        }
+
+        /* Camera Zoom & Pan Layer */
+        .map-camera-layer {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-origin: 0 0;
+            will-change: transform;
         }
 
         .map-svg {
@@ -670,99 +674,108 @@
             filter: drop-shadow(0 0 12px #2dd4bf);
             pointer-events: none;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.25s ease;
         }
 
         #travelerBeacon.visible {
             opacity: 1;
         }
 
-        /* Pop-out Info Card Emerging from Active Point */
-        .city-popout-card {
-            margin-top: 20px;
-            background: linear-gradient(145deg, rgba(22, 27, 44, 0.92), rgba(11, 14, 24, 0.96));
-            border: 1px solid rgba(226, 184, 87, 0.4);
-            border-radius: 20px;
-            padding: 24px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), 0 0 30px rgba(226, 184, 87, 0.12);
-            transform-origin: 55% 0%;
-            transform: scale(0.15) translateY(-40px);
+        /* ==========================================
+           IN-MAP POPOVER CARD EMERGING DIRECTLY FROM PIN
+           ========================================== */
+        .pin-popover {
+            position: absolute;
+            z-index: 25;
+            width: min(350px, 86%);
+            background: rgba(13, 17, 30, 0.94);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(226, 184, 87, 0.55);
+            border-radius: 18px;
+            padding: 18px 20px;
+            box-shadow: 0 22px 55px rgba(0, 0, 0, 0.85), 0 0 28px rgba(226, 184, 87, 0.2);
+            transform: scale(0);
             opacity: 0;
-            max-height: 0;
-            padding-top: 0;
-            padding-bottom: 0;
-            margin-top: 0;
-            overflow: hidden;
             pointer-events: none;
-            transition:
-                transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-                opacity 0.45s ease,
-                max-height 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-                padding 0.45s ease,
-                margin 0.45s ease;
+            transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.32s ease;
         }
 
-        .city-popout-card.open {
-            transform: scale(1) translateY(0);
+        .pin-popover.open {
+            transform: scale(1);
             opacity: 1;
-            max-height: 450px;
-            padding-top: 22px;
-            padding-bottom: 22px;
-            margin-top: 20px;
             pointer-events: auto;
         }
 
-        .popout-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-bottom: 10px;
+        /* Little pointer triangle connecting popover to the city dot */
+        .pin-pointer {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: rgba(13, 17, 30, 0.96);
+            border-left: 1px solid rgba(226, 184, 87, 0.55);
+            border-top: 1px solid rgba(226, 184, 87, 0.55);
+            transform: rotate(45deg);
+            top: -7px;
+            left: 50%;
+            margin-left: -6px;
+        }
+
+        .pin-popover.above-pin .pin-pointer {
+            top: auto;
+            bottom: -7px;
+            transform: rotate(225deg);
         }
 
         .route-step-counter {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 1.3px;
             color: var(--accent-teal);
-            margin-bottom: 4px;
-            font-weight: 600;
+            margin-bottom: 3px;
+            font-weight: 700;
         }
 
         .route-city-title {
-            font-size: clamp(1.35rem, 3vw, 1.75rem);
+            font-size: 1.25rem;
             color: var(--gold);
+            line-height: 1.2;
+            margin-bottom: 4px;
         }
 
         .route-city-years {
             display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            background: rgba(226, 184, 87, 0.14);
-            border: 1px solid rgba(226, 184, 87, 0.3);
-            font-size: 0.82rem;
+            font-size: 0.75rem;
             color: var(--gold-soft);
+            background: rgba(226, 184, 87, 0.14);
+            border: 1px solid rgba(226, 184, 87, 0.28);
+            padding: 2px 9px;
+            border-radius: 12px;
+            margin-bottom: 10px;
             font-weight: 600;
         }
 
-        .popout-footer {
+        .pin-desc {
+            color: #e5e7eb;
+            font-size: 0.84rem;
+            line-height: 1.5;
+        }
+
+        .pin-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 12px;
-            margin-top: 18px;
-            padding-top: 14px;
+            gap: 8px;
+            margin-top: 14px;
+            padding-top: 10px;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
-            flex-wrap: wrap;
         }
 
         /* Bottom Start Button Container Below Map */
         .map-bottom-action {
             display: flex;
             justify-content: center;
-            margin-top: 22px;
-            transition: opacity 0.35s ease, transform 0.35s ease;
+            margin-top: 20px;
         }
 
         .map-bottom-action.hidden {
@@ -770,13 +783,13 @@
         }
 
         .btn-outline {
-            padding: 9px 16px;
+            padding: 7px 13px;
             border-radius: 30px;
             background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.16);
             color: #fff;
             font-family: inherit;
-            font-size: 0.84rem;
+            font-size: 0.78rem;
             cursor: pointer;
             transition: all 0.25s;
         }
@@ -1155,7 +1168,6 @@
                 padding: 20px;
                 border-radius: 20px;
             }
-            /* Clean mobile top nav */
             nav {
                 padding: 5px 8px;
                 gap: 2px;
@@ -1184,7 +1196,6 @@
                 max-width: 280px;
                 margin: 0 auto;
             }
-            /* Clean single-column layout on mobile */
             .timeline, .photo-grid, .books-grid, .contrib-grid, .memory-grid, .takeaways {
                 grid-template-columns: 1fr;
                 gap: 14px;
@@ -1207,22 +1218,21 @@
                 grid-template-columns: 1fr;
             }
             .route-card {
-                padding: 16px;
+                padding: 14px;
             }
             .map-viewport {
-                aspect-ratio: 16 / 10;
-                min-height: 220px;
+                aspect-ratio: 4 / 3;
+                min-height: 310px;
             }
-            .city-popout-card.open {
-                padding: 18px;
+            .pin-popover {
+                width: 90%;
+                padding: 14px 16px;
             }
-            .popout-footer {
-                flex-direction: column;
-                align-items: stretch;
+            .route-city-title {
+                font-size: 1.12rem;
             }
-            .popout-footer button {
-                width: 100%;
-                justify-content: center;
+            .pin-desc {
+                font-size: 0.8rem;
             }
             .final-box {
                 padding: 26px 18px;
@@ -1407,21 +1417,21 @@
             </div>
         </section>
 
-        <!-- 3. INTERACTIVE WORLD MAP WITH POP-OUT INFO FROM POINT -->
+        <!-- 3. CINEMATIC ZOOM WORLD MAP WITH PIN POPOVER -->
         <section id="itinerariu">
             <div class="reveal">
                 <div class="section-badge">02 • Harta lumii și călătoriile</div>
                 <h2 class="section-title">Itinerariul unei vieți</h2>
                 <p class="section-subtitle">
-                    Pornește călătoria pe harta lumii și urmărește traseul lui Mircea Eliade de la București până la Chicago.
+                    Apasă pe butonul de sub hartă pentru a porni călătoria și a urmări traseul lui Mircea Eliade de la București până la Chicago.
                 </p>
             </div>
 
             <div class="glass-card route-card reveal">
-                <div class="map-stage-wrapper">
-                    <!-- Detailed World Map -->
-                    <div class="map-viewport">
-                        <svg class="map-svg" viewBox="0 0 1000 500" id="travelMapSvg">
+                <div class="map-viewport" id="mapViewport">
+                    <!-- Zoomable & Pannable Map Camera Layer -->
+                    <div class="map-camera-layer" id="mapCameraLayer">
+                        <svg class="map-svg" viewBox="0 0 1000 500" preserveAspectRatio="none" id="travelMapSvg">
                             <defs>
                                 <linearGradient id="routeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                                     <stop offset="0%" stop-color="#2dd4bf" />
@@ -1468,14 +1478,10 @@
                             <!-- Australia -->
                             <path class="continent-land" d="M 805,335 L 895,330 L 915,385 L 875,418 L 810,405 L 795,370 Z" />
 
-                            <!-- Individual Exact Path Segments Between Cities -->
-                            <!-- Seg 0->1: București(552,156) to Calcutta(712,226) -->
+                            <!-- Planned Route Dashed Lines -->
                             <path class="route-bg-path" d="M 552,156 Q 635,165 712,226" />
-                            <!-- Seg 1->2: Calcutta(712,226) to Londra(468,122) -->
                             <path class="route-bg-path" d="M 712,226 Q 605,70 468,122" />
-                            <!-- Seg 2->3: Londra(468,122) to Lisabona(452,168) -->
                             <path class="route-bg-path" d="M 468,122 Q 445,145 452,168" />
-                            <!-- Seg 3->4: Lisabona(452,168) to Chicago(226,144) -->
                             <path class="route-bg-path" d="M 452,168 Q 345,95 226,144" />
 
                             <!-- Active Drawn Route Segments -->
@@ -1532,33 +1538,30 @@
 
                             <!-- Animated Traveler Beacon -->
                             <g id="travelerBeacon" transform="translate(552, 156)">
-                                <circle r="13" fill="rgba(45, 212, 191, 0.3)" />
+                                <circle r="13" fill="rgba(45, 212, 191, 0.32)" />
                                 <circle r="5.5" fill="#ffffff" stroke="#2dd4bf" stroke-width="2.2" />
                             </g>
                         </svg>
                     </div>
 
-                    <!-- Pop-out Info Card Emerging From Active City Point -->
-                    <div class="city-popout-card" id="cityPopoutCard">
-                        <div class="popout-header">
-                            <div>
-                                <div class="route-step-counter" id="routeStep"></div>
-                                <h3 class="route-city-title" id="routeCityName"></h3>
-                            </div>
-                            <span class="route-city-years" id="routeCityYears"></span>
-                        </div>
-                        <p id="routeCityDesc" style="color: #d1d5db; font-size: 0.94rem;"></p>
+                    <!-- Popover Card Emerging Directly Out of the City Dot -->
+                    <div class="pin-popover" id="pinPopover">
+                        <div class="pin-pointer" id="pinPointer"></div>
+                        <div class="route-step-counter" id="routeStep"></div>
+                        <h3 class="route-city-title" id="routeCityName"></h3>
+                        <div class="route-city-years" id="routeCityYears"></div>
+                        <p class="pin-desc" id="routeCityDesc"></p>
 
-                        <div class="popout-footer">
-                            <button class="btn-outline" onclick="resetJourney()">↺ Înapoi la hartă</button>
-                            <button class="btn-primary" id="nextJourneyBtn" style="padding: 10px 22px; font-size: 0.86rem;" onclick="advanceJourney()">Mergem mai departe →</button>
+                        <div class="pin-footer">
+                            <button class="btn-outline" onclick="resetJourney()">↺ Hartă</button>
+                            <button class="btn-primary" id="nextJourneyBtn" style="padding: 8px 16px; font-size: 0.8rem;" onclick="advanceJourney()">Mergem mai departe →</button>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Initial Start Button Below Map -->
-                    <div class="map-bottom-action" id="mapBottomAction">
-                        <button class="btn-primary" onclick="startJourney()">🧭 Începem călătoria →</button>
-                    </div>
+                <!-- Start Button Below Map -->
+                <div class="map-bottom-action" id="mapBottomAction">
+                    <button class="btn-primary" onclick="startJourney()">🧭 Începem călătoria →</button>
                 </div>
             </div>
         </section>
@@ -1922,10 +1925,13 @@
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
             sacredGroup.position.x = window.innerWidth < 900 ? 0 : 6;
+            if (currentCityIndex >= 0 && !isAnimatingTravel) {
+                positionPopoverAtCity(citiesData[currentCityIndex]);
+            }
         });
 
         // ==========================================
-        // 2. SEQUENTIAL WORLD JOURNEY MAP ANIMATION
+        // 2. CINEMATIC ZOOM MAP + PIN POPOVER ENGINE
         // ==========================================
         const citiesData = [
             {
@@ -1933,40 +1939,35 @@
                 name: 'București, România',
                 years: '1907 – 1928 • 1931 – 1940',
                 desc: 'Orașul natal unde își formează cultura enciclopedică, debutează în presă încă din liceu și devine liderul spiritual al tinerei generații interbelice.',
-                x: 552, y: 156,
-                originX: '55.2%'
+                x: 552, y: 156
             },
             {
                 step: 'Etapa 2 din 5 • Fascinația Orientului',
                 name: 'Calcutta, India',
                 years: '1928 – 1931',
                 desc: 'Studiază filosofia indiană și sanscrita, locuiește în casa profesorului Dasgupta și trăiește povestea care va da naștere capodoperei „Maitreyi”.',
-                x: 712, y: 226,
-                originX: '71.2%'
+                x: 712, y: 226
             },
             {
                 step: 'Etapa 3 din 5 • Misiune diplomatică',
                 name: 'Londra, Marea Britanie',
                 years: '1940 – 1941',
                 desc: 'Activează ca atașat cultural al României la Londra în plin război mondial, continuând cercetările sale asupra simbolurilor și miturilor.',
-                x: 468, y: 122,
-                originX: '46.8%'
+                x: 468, y: 122
             },
             {
                 step: 'Etapa 4 din 5 • Refugiu și creație',
                 name: 'Lisabona, Portugalia',
                 years: '1941 – 1945',
                 desc: 'La țărmul Oceanului Atlantic scrie lucrări fundamentale de istorie a religiilor și reflectează asupra destinului culturii române.',
-                x: 452, y: 168,
-                originX: '45.2%'
+                x: 452, y: 168
             },
             {
                 step: 'Etapa 5 din 5 • Consacrare universală',
                 name: 'Chicago, Statele Unite',
                 years: '1956 – 1986',
                 desc: 'Conduce catedra de Istorie a Religiilor la Universitatea din Chicago, publică mari sinteze științifice și capodoperele sale fantastice.',
-                x: 226, y: 144,
-                originX: '22.6%'
+                x: 226, y: 144
             }
         ];
 
@@ -1977,7 +1978,6 @@
             document.getElementById('seg-3')
         ];
 
-        // Initialize all 4 route segments as hidden
         segmentPaths.forEach(seg => {
             const len = seg.getTotalLength();
             seg.style.strokeDasharray = len;
@@ -1987,7 +1987,67 @@
         let currentCityIndex = -1;
         let isAnimatingTravel = false;
         const travelerBeacon = document.getElementById('travelerBeacon');
-        const popoutCard = document.getElementById('cityPopoutCard');
+        const pinPopover = document.getElementById('pinPopover');
+        const pinPointer = document.getElementById('pinPointer');
+        const mapViewport = document.getElementById('mapViewport');
+        const mapCameraLayer = document.getElementById('mapCameraLayer');
+
+        // Camera Zoom & Pan helper (1 = full world map, >1 = zoomed in on traveling point)
+        function setCameraFocus(svgX, svgY, scale) {
+            const rect = mapViewport.getBoundingClientRect();
+            const px = (svgX / 1000) * rect.width;
+            const py = (svgY / 500) * rect.height;
+
+            // Keep target point centered while clamped inside map bounds
+            let tx = (rect.width / 2) - px * scale;
+            let ty = (rect.height / 2) - py * scale;
+
+            const minTx = rect.width * (1 - scale);
+            const minTy = rect.height * (1 - scale);
+            tx = Math.min(0, Math.max(minTx, tx));
+            ty = Math.min(0, Math.max(minTy, ty));
+
+            mapCameraLayer.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+        }
+
+        // Positions the popover card directly emerging from the exact city dot
+        function positionPopoverAtCity(city) {
+            const rect = mapViewport.getBoundingClientRect();
+            const pinPxX = (city.x / 1000) * rect.width;
+            const pinPxY = (city.y / 500) * rect.height;
+
+            // Measure popover size
+            const popW = Math.min(350, rect.width * 0.88);
+            pinPopover.style.width = popW + 'px';
+
+            // Clamp horizontally inside viewport
+            const margin = 12;
+            let left = pinPxX - popW / 2;
+            left = Math.max(margin, Math.min(rect.width - popW - margin, left));
+
+            // Place below pin if enough vertical space, otherwise above pin
+            const placeAbove = (pinPxY > rect.height * 0.56);
+            pinPopover.classList.toggle('above-pin', placeAbove);
+
+            if (placeAbove) {
+                pinPopover.style.top = 'auto';
+                pinPopover.style.bottom = (rect.height - pinPxY + 14) + 'px';
+            } else {
+                pinPopover.style.bottom = 'auto';
+                pinPopover.style.top = (pinPxY + 14) + 'px';
+            }
+
+            pinPopover.style.left = left + 'px';
+
+            // Align pointer arrow directly to the city dot X coordinate
+            const arrowX = Math.max(18, Math.min(popW - 18, pinPxX - left));
+            pinPointer.style.left = arrowX + 'px';
+
+            // Set transform-origin to exact city dot relative to popover box
+            const originRelX = pinPxX - left;
+            const originRelY = placeAbove ? (pinPopover.offsetHeight + 14) : -14;
+            pinPopover.style.transformOrigin = `${originRelX}px ${originRelY}px`;
+        }
 
         function populateCardContent(idx) {
             const city = citiesData[idx];
@@ -1997,11 +2057,7 @@
             document.getElementById('routeCityDesc').textContent = city.desc;
 
             const nextBtn = document.getElementById('nextJourneyBtn');
-            if (idx === citiesData.length - 1) {
-                nextBtn.textContent = '↻ Reia de la București';
-            } else {
-                nextBtn.textContent = 'Mergem mai departe →';
-            }
+            nextBtn.textContent = (idx === citiesData.length - 1) ? '↻ De la capăt' : 'Mergem mai departe →';
         }
 
         function updateCityNodeStates(activeIdx) {
@@ -2023,20 +2079,18 @@
             currentCityIndex = 0;
             const startCity = citiesData[0];
 
-            // Hide start button below map
             document.getElementById('mapBottomAction').classList.add('hidden');
+            setCameraFocus(500, 250, 1);
 
-            // Place beacon directly on Bucharest
             travelerBeacon.setAttribute('transform', `translate(${startCity.x}, ${startCity.y})`);
             travelerBeacon.classList.add('visible');
             updateCityNodeStates(0);
             setDrawnSegmentsUpTo(0);
 
-            // Emerge card directly out of Bucharest point
             populateCardContent(0);
-            popoutCard.style.transformOrigin = `${startCity.originX} 0%`;
+            positionPopoverAtCity(startCity);
             requestAnimationFrame(() => {
-                popoutCard.classList.add('open');
+                pinPopover.classList.add('open');
             });
         }
 
@@ -2064,100 +2118,95 @@
             const fromCity = citiesData[fromIdx];
             const toCity = citiesData[targetIndex];
 
-            // 1. Fold card back INTO the current city point
-            popoutCard.style.transformOrigin = `${fromCity.originX} 0%`;
-            popoutCard.classList.remove('open');
+            // 1. Fold popover card directly back INTO the current city point
+            positionPopoverAtCity(fromCity);
+            pinPopover.classList.remove('open');
 
-            // 2. After card folds into the point, travel along the exact path to the next point
+            // 2. Once folded into the dot, zoom in on the route and fly to the destination point
             setTimeout(() => {
-                // If moving sequentially forward by 1 step, animate along the exact SVG curve segment
-                if (targetIndex === fromIdx + 1) {
-                    const seg = segmentPaths[fromIdx];
-                    const segLen = seg.getTotalLength();
-                    const duration = 1150;
-                    const startTime = performance.now();
+                const isNextStep = (targetIndex === fromIdx + 1);
+                const duration = isNextStep ? 1350 : 1050;
+                const zoomPeak = isMobile ? 1.85 : 2.15;
+                const startTime = performance.now();
 
-                    // Deactivate old node pulse during flight
-                    document.getElementById('node-' + fromIdx).classList.remove('active');
-                    document.getElementById('node-' + fromIdx).classList.add('visited');
+                document.getElementById('node-' + fromIdx).classList.remove('active');
+                document.getElementById('node-' + fromIdx).classList.add('visited');
 
-                    function stepFlight(now) {
-                        const elapsed = now - startTime;
-                        const t = Math.min(elapsed / duration, 1);
-                        const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+                if (!isNextStep) {
+                    setDrawnSegmentsUpTo(targetIndex);
+                }
 
-                        // Draw line simultaneously with beacon movement
+                const seg = isNextStep ? segmentPaths[fromIdx] : null;
+                const segLen = seg ? seg.getTotalLength() : 0;
+
+                function animateFlightWithZoom(now) {
+                    const elapsed = now - startTime;
+                    const t = Math.min(elapsed / duration, 1);
+                    const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+                    // Smooth zoom in during travel (peaks at middle of route) and zooms back out to 1.0 upon arrival
+                    const zoomFactor = 1 + (zoomPeak - 1) * Math.sin(Math.PI * ease);
+
+                    let curX, curY;
+                    if (isNextStep) {
                         seg.style.strokeDashoffset = segLen * (1 - ease);
-
-                        // Move beacon to exact point on curve (and lock exact destination coordinates at t=1)
                         if (t < 1) {
                             const pt = seg.getPointAtLength(segLen * ease);
-                            travelerBeacon.setAttribute('transform', `translate(${pt.x}, ${pt.y})`);
-                            requestAnimationFrame(stepFlight);
+                            curX = pt.x;
+                            curY = pt.y;
                         } else {
-                            // Exact arrival at destination city coordinates!
-                            travelerBeacon.setAttribute('transform', `translate(${toCity.x}, ${toCity.y})`);
-                            currentCityIndex = targetIndex;
-                            updateCityNodeStates(targetIndex);
-
-                            // 3. Emerge new info card directly out of the destination point
-                            populateCardContent(targetIndex);
-                            popoutCard.style.transformOrigin = `${toCity.originX} 0%`;
-                            requestAnimationFrame(() => {
-                                popoutCard.classList.add('open');
-                                isAnimatingTravel = false;
-                            });
+                            curX = toCity.x;
+                            curY = toCity.y;
                         }
-                    }
-                    requestAnimationFrame(stepFlight);
-                } else {
-                    // Direct jump (e.g., resetting from Chicago back to București or clicking a non-adjacent city)
-                    const duration = 850;
-                    const startTime = performance.now();
-                    setDrawnSegmentsUpTo(targetIndex);
-
-                    function stepDirectFlight(now) {
-                        const elapsed = now - startTime;
-                        const t = Math.min(elapsed / duration, 1);
-                        const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
-                        const curX = fromCity.x + (toCity.x - fromCity.x) * ease;
-                        const curY = fromCity.y + (toCity.y - fromCity.y) * ease - Math.sin(Math.PI * ease) * 45;
-                        travelerBeacon.setAttribute('transform', `translate(${curX}, ${curY})`);
-
+                    } else {
                         if (t < 1) {
-                            requestAnimationFrame(stepDirectFlight);
+                            curX = fromCity.x + (toCity.x - fromCity.x) * ease;
+                            curY = fromCity.y + (toCity.y - fromCity.y) * ease - Math.sin(Math.PI * ease) * 40;
                         } else {
-                            travelerBeacon.setAttribute('transform', `translate(${toCity.x}, ${toCity.y})`);
-                            currentCityIndex = targetIndex;
-                            updateCityNodeStates(targetIndex);
-
-                            populateCardContent(targetIndex);
-                            popoutCard.style.transformOrigin = `${toCity.originX} 0%`;
-                            requestAnimationFrame(() => {
-                                popoutCard.classList.add('open');
-                                isAnimatingTravel = false;
-                            });
+                            curX = toCity.x;
+                            curY = toCity.y;
                         }
                     }
-                    requestAnimationFrame(stepDirectFlight);
+
+                    travelerBeacon.setAttribute('transform', `translate(${curX}, ${curY})`);
+                    setCameraFocus(curX, curY, zoomFactor);
+
+                    if (t < 1) {
+                        requestAnimationFrame(animateFlightWithZoom);
+                    } else {
+                        // Exact arrival at destination city coordinates & full map zoom reset!
+                        travelerBeacon.setAttribute('transform', `translate(${toCity.x}, ${toCity.y})`);
+                        setCameraFocus(500, 250, 1);
+                        currentCityIndex = targetIndex;
+                        updateCityNodeStates(targetIndex);
+
+                        // 3. Emerge new popover card directly out of the destination point
+                        populateCardContent(targetIndex);
+                        positionPopoverAtCity(toCity);
+                        requestAnimationFrame(() => {
+                            pinPopover.classList.add('open');
+                            isAnimatingTravel = false;
+                        });
+                    }
                 }
-            }, 420);
+                requestAnimationFrame(animateFlightWithZoom);
+            }, 380);
         }
 
         function resetJourney() {
             if (isAnimatingTravel) return;
             const curCity = currentCityIndex >= 0 ? citiesData[currentCityIndex] : citiesData[0];
-            popoutCard.style.transformOrigin = `${curCity.originX} 0%`;
-            popoutCard.classList.remove('open');
+            positionPopoverAtCity(curCity);
+            pinPopover.classList.remove('open');
 
             setTimeout(() => {
                 currentCityIndex = -1;
                 travelerBeacon.classList.remove('visible');
                 setDrawnSegmentsUpTo(0);
                 updateCityNodeStates(-1);
+                setCameraFocus(500, 250, 1);
                 document.getElementById('mapBottomAction').classList.remove('hidden');
-            }, 420);
+            }, 380);
         }
 
         // ==========================================
