@@ -10,7 +10,7 @@
     <style>
         :root {
             --bg-dark: #07080d;
-            --glass-bg: rgba(20, 23, 36, 0.65);
+            --glass-bg: rgba(20, 23, 36, 0.68);
             --glass-border: rgba(255, 255, 255, 0.12);
             --glass-highlight: rgba(212, 175, 55, 0.38);
             --gold: #e2b857;
@@ -84,24 +84,32 @@
             transition: width 0.1s ease-out;
         }
 
-        /* Navigation */
-        nav {
+        /* Navigation — Sleek & Compact on Mobile */
+        .nav-wrapper {
             position: fixed;
             top: max(12px, env(safe-area-inset-top));
-            left: 50%;
-            transform: translateX(-50%);
+            left: 0;
+            right: 0;
             z-index: 999;
-            background: rgba(13, 16, 27, 0.85);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border: 1px solid var(--glass-border);
-            border-radius: 50px;
-            padding: 7px 14px;
             display: flex;
-            gap: 6px;
+            justify-content: center;
+            padding: 0 12px;
+            pointer-events: none;
+        }
+
+        nav {
+            pointer-events: auto;
+            background: rgba(11, 14, 24, 0.86);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 50px;
+            padding: 6px 10px;
+            display: flex;
+            gap: 4px;
             align-items: center;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.55);
-            max-width: 94vw;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+            max-width: 100%;
             overflow-x: auto;
             scrollbar-width: none;
         }
@@ -116,9 +124,10 @@
             font-size: 0.8rem;
             font-weight: 500;
             white-space: nowrap;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
             padding: 6px 12px;
             border-radius: 20px;
+            flex-shrink: 0;
         }
 
         nav a:hover, nav a.active {
@@ -140,6 +149,7 @@
             white-space: nowrap;
             transition: all 0.3s ease;
             margin-left: 4px;
+            flex-shrink: 0;
         }
 
         .pres-btn:hover {
@@ -147,42 +157,41 @@
             color: #07080d;
         }
 
-        /* Floating Slide Controls (Works on both Desktop & Mobile) */
+        /* Floating Slide Controls (Desktop Only) */
         .slide-controls {
             position: fixed;
-            bottom: max(16px, env(safe-area-inset-bottom));
-            right: 16px;
+            bottom: 20px;
+            right: 22px;
             z-index: 990;
             display: flex;
             align-items: center;
             gap: 8px;
-            background: rgba(13, 16, 27, 0.85);
+            background: rgba(13, 16, 27, 0.82);
             backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             padding: 6px 12px;
             border-radius: 30px;
             font-size: 0.78rem;
             color: var(--text-muted);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.45);
         }
 
         .slide-arrow {
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.14);
             color: var(--gold-soft);
-            width: 30px;
-            height: 30px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             transition: all 0.2s;
         }
 
-        .slide-arrow:active, .slide-arrow:hover {
+        .slide-arrow:hover {
             background: var(--gold);
             color: #07080d;
         }
@@ -216,9 +225,9 @@
             background: rgba(226, 184, 87, 0.12);
             border: 1px solid rgba(226, 184, 87, 0.35);
             color: var(--gold-soft);
-            font-size: 0.75rem;
+            font-size: 0.74rem;
             text-transform: uppercase;
-            letter-spacing: 1.6px;
+            letter-spacing: 1.5px;
             margin-bottom: 14px;
             width: fit-content;
         }
@@ -386,7 +395,7 @@
             font-style: italic;
         }
 
-        /* BIOGRAFIA TIMELINE - ALIGNED GRID */
+        /* BIOGRAFIA TIMELINE - CLEAN & ALIGNED */
         .timeline {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -524,85 +533,29 @@
         }
 
         /* ==========================================
-           DETAILED WORLD MAP & REVEALABLE CITY PANEL
+           INTERACTIVE WORLD MAP WITH POP-OUT INFO FROM POINT
            ========================================== */
         .route-card {
             padding: 26px;
-            background: linear-gradient(145deg, rgba(14, 18, 32, 0.85), rgba(8, 10, 18, 0.94));
+            background: linear-gradient(145deg, rgba(14, 18, 32, 0.86), rgba(8, 10, 18, 0.95));
             border: 1px solid rgba(226, 184, 87, 0.25);
         }
 
-        .route-topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .route-tabs {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .route-tab {
-            padding: 8px 15px;
-            border-radius: 30px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            color: var(--text-muted);
-            font-family: inherit;
-            font-size: 0.84rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            white-space: nowrap;
-        }
-
-        .route-tab:hover {
-            border-color: var(--gold);
-            color: #fff;
-        }
-
-        .route-tab.active {
-            background: linear-gradient(135deg, var(--gold), #c8962e);
-            color: #07080d;
-            border-color: var(--gold);
-            box-shadow: 0 6px 20px rgba(226, 184, 87, 0.35);
-        }
-
-        /* Initially Map Only (1fr), expands to 1.35fr 0.65fr when city selected */
-        .route-layout {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 24px;
-            align-items: stretch;
-            transition: all 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        .route-layout.has-selection {
-            grid-template-columns: 1.35fr 0.65fr;
+        .map-stage-wrapper {
+            position: relative;
+            width: 100%;
         }
 
         .map-viewport {
             position: relative;
             width: 100%;
-            min-height: 410px;
+            aspect-ratio: 2 / 1;
+            min-height: 260px;
             border-radius: 20px;
-            background: radial-gradient(circle at 50% 45%, rgba(20, 35, 60, 0.45), rgba(6, 8, 15, 0.98) 85%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: radial-gradient(circle at 50% 45%, rgba(20, 35, 60, 0.48), rgba(6, 8, 15, 0.98) 85%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             overflow: hidden;
             box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.75);
-        }
-
-        .map-scroll-inner {
-            width: 100%;
-            height: 100%;
         }
 
         .map-svg {
@@ -627,7 +580,6 @@
             stroke: rgba(226, 184, 87, 0.28);
             stroke-width: 1.2;
             stroke-linejoin: round;
-            transition: fill 0.4s ease;
         }
 
         .map-coord-text {
@@ -646,39 +598,36 @@
         .route-active-path {
             fill: none;
             stroke: url(#routeGrad);
-            stroke-width: 3.2;
+            stroke-width: 3.4;
             stroke-linecap: round;
-            filter: drop-shadow(0 0 8px rgba(226, 184, 87, 0.75));
-            transition: stroke-dashoffset 1.15s cubic-bezier(0.22, 1, 0.36, 1);
+            filter: drop-shadow(0 0 8px rgba(226, 184, 87, 0.8));
         }
 
         .city-node {
             cursor: pointer;
-            transition: opacity 0.4s ease;
         }
 
         .city-pulse {
             fill: none;
             stroke: var(--gold);
-            stroke-width: 1.6;
+            stroke-width: 1.8;
             opacity: 0;
         }
 
-        .city-node.active .city-pulse,
-        .city-node.initial-pulse .city-pulse {
-            animation: cityPulseAnim 2s infinite ease-out;
+        .city-node.active .city-pulse {
+            animation: cityPulseAnim 1.9s infinite ease-out;
         }
 
         @keyframes cityPulseAnim {
             0% { r: 6; opacity: 0.95; }
-            100% { r: 24; opacity: 0; }
+            100% { r: 26; opacity: 0; }
         }
 
         .city-dot {
             fill: #1f2937;
-            stroke: rgba(255, 255, 255, 0.6);
+            stroke: rgba(255, 255, 255, 0.55);
             stroke-width: 2;
-            transition: all 0.45s ease;
+            transition: all 0.4s ease;
         }
 
         .city-node.visited .city-dot {
@@ -689,14 +638,15 @@
         .city-node.active .city-dot {
             fill: var(--gold);
             stroke: #fff;
-            r: 7.5;
-            filter: drop-shadow(0 0 10px var(--gold));
+            r: 8;
+            filter: drop-shadow(0 0 12px var(--gold));
         }
 
         .city-label-bg {
-            fill: rgba(7, 9, 16, 0.82);
-            stroke: rgba(255, 255, 255, 0.14);
-            stroke-width: 0.8;
+            fill: rgba(7, 9, 16, 0.84);
+            stroke: rgba(255, 255, 255, 0.15);
+            stroke-width: 0.9;
+            transition: all 0.35s ease;
         }
 
         .city-node.active .city-label-bg {
@@ -709,7 +659,6 @@
             font-size: 11px;
             font-weight: 600;
             font-family: 'Plus Jakarta Sans', sans-serif;
-            transition: all 0.35s ease;
         }
 
         .city-node.active .city-label {
@@ -721,97 +670,108 @@
             filter: drop-shadow(0 0 12px #2dd4bf);
             pointer-events: none;
             opacity: 0;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.3s ease;
         }
 
         #travelerBeacon.visible {
             opacity: 1;
         }
 
-        /* Floating Map Prompt Overlay before selecting a city */
-        .map-start-overlay {
-            position: absolute;
-            bottom: 14px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(10, 13, 24, 0.88);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(226, 184, 87, 0.42);
-            padding: 10px 18px;
-            border-radius: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.65);
-            z-index: 5;
-            transition: opacity 0.4s ease, transform 0.4s ease;
-            max-width: 92%;
-        }
-
-        .map-start-overlay.hidden {
-            opacity: 0;
-            pointer-events: none;
-            transform: translate(-50%, 15px);
-        }
-
-        /* City Info Panel - Hidden initially until user selects a city */
-        .route-info-panel {
-            display: none;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(226, 184, 87, 0.25);
+        /* Pop-out Info Card Emerging from Active Point */
+        .city-popout-card {
+            margin-top: 20px;
+            background: linear-gradient(145deg, rgba(22, 27, 44, 0.92), rgba(11, 14, 24, 0.96));
+            border: 1px solid rgba(226, 184, 87, 0.4);
             border-radius: 20px;
             padding: 24px;
-            flex-direction: column;
-            justify-content: space-between;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), 0 0 30px rgba(226, 184, 87, 0.12);
+            transform-origin: 55% 0%;
+            transform: scale(0.15) translateY(-40px);
             opacity: 0;
-            transform: translateY(15px);
-            transition: opacity 0.4s ease, transform 0.4s ease;
+            max-height: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            margin-top: 0;
+            overflow: hidden;
+            pointer-events: none;
+            transition:
+                transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.45s ease,
+                max-height 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+                padding 0.45s ease,
+                margin 0.45s ease;
         }
 
-        .route-layout.has-selection .route-info-panel {
-            display: flex;
+        .city-popout-card.open {
+            transform: scale(1) translateY(0);
             opacity: 1;
-            transform: translateY(0);
+            max-height: 450px;
+            padding-top: 22px;
+            padding-bottom: 22px;
+            margin-top: 20px;
+            pointer-events: auto;
         }
 
-        .route-info-panel.switching {
-            opacity: 0 !important;
-            transform: translateY(10px) !important;
+        .popout-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
         }
 
         .route-step-counter {
-            font-size: 0.76rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             color: var(--accent-teal);
-            margin-bottom: 6px;
-        }
-
-        .route-city-title {
-            font-size: 1.55rem;
-            color: var(--gold);
             margin-bottom: 4px;
-        }
-
-        .route-city-years {
-            font-size: 0.86rem;
-            color: var(--gold-soft);
-            margin-bottom: 12px;
             font-weight: 600;
         }
 
-        .route-nav-btns {
+        .route-city-title {
+            font-size: clamp(1.35rem, 3vw, 1.75rem);
+            color: var(--gold);
+        }
+
+        .route-city-years {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(226, 184, 87, 0.14);
+            border: 1px solid rgba(226, 184, 87, 0.3);
+            font-size: 0.82rem;
+            color: var(--gold-soft);
+            font-weight: 600;
+        }
+
+        .popout-footer {
             display: flex;
-            gap: 10px;
-            margin-top: 20px;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-top: 18px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
             flex-wrap: wrap;
+        }
+
+        /* Bottom Start Button Container Below Map */
+        .map-bottom-action {
+            display: flex;
+            justify-content: center;
+            margin-top: 22px;
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+
+        .map-bottom-action.hidden {
+            display: none;
         }
 
         .btn-outline {
             padding: 9px 16px;
-            border-radius: 12px;
+            border-radius: 30px;
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(255, 255, 255, 0.14);
             color: #fff;
@@ -866,7 +826,6 @@
             color: var(--gold);
         }
 
-        /* Cinema Banner */
         .cinema-banner {
             margin-top: 28px;
             border-left: 4px solid var(--accent-teal);
@@ -1155,7 +1114,7 @@
 
         footer {
             text-align: center;
-            padding: 36px 20px 75px;
+            padding: 36px 20px;
             color: var(--text-muted);
             font-size: 0.82rem;
             border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -1168,7 +1127,7 @@
             .timeline, .memory-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-            .statue-showcase, .route-layout.has-selection {
+            .statue-showcase {
                 grid-template-columns: 1fr;
             }
             .bust-3d-card {
@@ -1185,104 +1144,88 @@
                 padding: 0 16px;
             }
             section {
-                padding: 92px 0 56px;
+                padding: 86px 0 48px;
                 min-height: auto;
             }
             #acasa {
+                padding-top: 95px;
                 min-height: 100svh;
             }
             .glass-card {
                 padding: 20px;
                 border-radius: 20px;
             }
-            /* Hide desktop fullscreen button on phones */
-            .pres-btn {
+            /* Clean mobile top nav */
+            nav {
+                padding: 5px 8px;
+                gap: 2px;
+            }
+            nav a {
+                font-size: 0.75rem;
+                padding: 6px 10px;
+            }
+            .pres-btn, .slide-controls {
                 display: none;
             }
             .hero-grid {
                 grid-template-columns: 1fr;
                 text-align: center;
-                gap: 28px;
+                gap: 26px;
             }
             .hero-tags {
                 justify-content: center;
                 gap: 8px;
             }
             .tag {
-                font-size: 0.8rem;
-                padding: 6px 12px;
+                font-size: 0.78rem;
+                padding: 6px 11px;
             }
             .portrait-frame {
-                max-width: 290px;
+                max-width: 280px;
                 margin: 0 auto;
             }
+            /* Clean single-column layout on mobile */
             .timeline, .photo-grid, .books-grid, .contrib-grid, .memory-grid, .takeaways {
                 grid-template-columns: 1fr;
-                gap: 16px;
+                gap: 14px;
+            }
+            .timeline-header {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                padding-bottom: 10px;
+                margin-bottom: 10px;
+            }
+            .timeline-year {
+                font-size: 1.25rem;
             }
             .timeline-card h3 {
                 min-height: auto;
+                font-size: 1.08rem;
             }
             .statue-specs {
                 grid-template-columns: 1fr;
             }
-
-            /* Mobile Map Optimization: Horizontal swipeable tabs & clear interactive map */
             .route-card {
-                padding: 18px;
-            }
-            .route-tabs {
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                padding-bottom: 6px;
-                width: 100%;
-                scrollbar-width: none;
-            }
-            .route-tabs::-webkit-scrollbar {
-                display: none;
+                padding: 16px;
             }
             .map-viewport {
-                min-height: 290px;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
+                aspect-ratio: 16 / 10;
+                min-height: 220px;
             }
-            .map-scroll-inner {
-                min-width: 620px;
-                height: 290px;
+            .city-popout-card.open {
+                padding: 18px;
             }
-            .map-start-overlay {
-                position: sticky;
-                left: 50%;
-                transform: translateX(-50%);
+            .popout-footer {
                 flex-direction: column;
-                gap: 8px;
-                text-align: center;
-                padding: 10px 16px;
-                border-radius: 18px;
-                width: 88%;
-                bottom: 10px;
+                align-items: stretch;
             }
-            .map-start-overlay.hidden {
-                transform: translate(-50%, 15px);
-            }
-            .route-nav-btns {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-            }
-            .route-nav-btns button {
+            .popout-footer button {
                 width: 100%;
                 justify-content: center;
             }
             .final-box {
-                padding: 28px 18px;
-            }
-            /* Center floating slide bar nicely at bottom on mobile */
-            .slide-controls {
-                left: 50%;
-                right: auto;
-                transform: translateX(-50%);
-                bottom: max(12px, env(safe-area-inset-bottom));
-                padding: 6px 14px;
+                padding: 26px 18px;
             }
         }
     </style>
@@ -1295,19 +1238,21 @@
     <canvas id="bg-canvas"></canvas>
 
     <!-- Navigation -->
-    <nav>
-        <a href="#acasa" class="active">Prezentare</a>
-        <a href="#biografia">Biografia</a>
-        <a href="#itinerariu">Itinerariu</a>
-        <a href="#opere">Opere scrise</a>
-        <a href="#contributia">Contribuția</a>
-        <a href="#memoria">Memoria</a>
-        <a href="#finalul">Finalul</a>
-        <button class="pres-btn" id="presBtn" onclick="togglePresentationMode()">⛶ Prezentare</button>
-    </nav>
+    <div class="nav-wrapper">
+        <nav>
+            <a href="#acasa" class="active">Prezentare</a>
+            <a href="#biografia">Biografia</a>
+            <a href="#itinerariu">Itinerariu</a>
+            <a href="#opere">Opere</a>
+            <a href="#contributia">Contribuția</a>
+            <a href="#memoria">Memoria</a>
+            <a href="#finalul">Finalul</a>
+            <button class="pres-btn" id="presBtn" onclick="togglePresentationMode()">⛶ Prezentare</button>
+        </nav>
+    </div>
 
-    <!-- Slide Navigation Pill (Desktop & Mobile) -->
-    <div class="slide-controls" title="Navighează între secțiuni">
+    <!-- Slide Navigation Pill (Desktop) -->
+    <div class="slide-controls" title="Folosește săgețile ← → de pe tastatură">
         <button class="slide-arrow" onclick="navigateSection(-1)" aria-label="Secțiunea anterioară">←</button>
         <span id="slideIndicator">1 / 7</span>
         <button class="slide-arrow" onclick="navigateSection(1)" aria-label="Secțiunea următoare">→</button>
@@ -1462,162 +1407,157 @@
             </div>
         </section>
 
-        <!-- 3. DETAILED WORLD MAP & ANIMATED ROUTE (ONLY MAP SHOWN INITIALLY) -->
+        <!-- 3. INTERACTIVE WORLD MAP WITH POP-OUT INFO FROM POINT -->
         <section id="itinerariu">
             <div class="reveal">
                 <div class="section-badge">02 • Harta lumii și călătoriile</div>
                 <h2 class="section-title">Itinerariul unei vieți</h2>
                 <p class="section-subtitle">
-                    Apasă pe un oraș de pe hartă sau din lista de mai jos pentru a vedea traseul și povestea fiecărei etape.
+                    Pornește călătoria pe harta lumii și urmărește traseul lui Mircea Eliade de la București până la Chicago.
                 </p>
             </div>
 
             <div class="glass-card route-card reveal">
-                <div class="route-topbar">
-                    <div class="route-tabs" id="routeTabs">
-                        <button class="route-tab" onclick="selectCity(0)">1. București</button>
-                        <button class="route-tab" onclick="selectCity(1)">2. Calcutta</button>
-                        <button class="route-tab" onclick="selectCity(2)">3. Londra</button>
-                        <button class="route-tab" onclick="selectCity(3)">4. Lisabona</button>
-                        <button class="route-tab" onclick="selectCity(4)">5. Chicago</button>
-                    </div>
-                    <button class="btn-outline" id="resetMapBtn" style="display: none; font-size: 0.78rem;" onclick="resetMapView()">↺ Resetează harta</button>
-                </div>
+                <div class="map-stage-wrapper">
+                    <!-- Detailed World Map -->
+                    <div class="map-viewport">
+                        <svg class="map-svg" viewBox="0 0 1000 500" id="travelMapSvg">
+                            <defs>
+                                <linearGradient id="routeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#2dd4bf" />
+                                    <stop offset="50%" stop-color="#e2b857" />
+                                    <stop offset="100%" stop-color="#ffffff" />
+                                </linearGradient>
+                            </defs>
 
-                <!-- Initially only .map-viewport is visible; .route-info-panel opens on first city click -->
-                <div class="route-layout" id="routeLayout">
-                    <!-- Detailed World Map SVG -->
-                    <div class="map-viewport" id="mapViewport">
-                        <div class="map-scroll-inner">
-                            <svg class="map-svg" viewBox="0 0 1000 500" id="travelMapSvg">
-                                <defs>
-                                    <linearGradient id="routeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                        <stop offset="0%" stop-color="#2dd4bf" />
-                                        <stop offset="50%" stop-color="#e2b857" />
-                                        <stop offset="100%" stop-color="#ffffff" />
-                                    </linearGradient>
-                                </defs>
+                            <!-- Latitude & Longitude Grid -->
+                            <line class="map-grid-line" x1="0" y1="85" x2="1000" y2="85" />
+                            <line class="map-grid-line" x1="0" y1="170" x2="1000" y2="170" />
+                            <line class="map-equator" x1="0" y1="275" x2="1000" y2="275" />
+                            <line class="map-grid-line" x1="0" y1="375" x2="1000" y2="375" />
+                            <line class="map-grid-line" x1="200" y1="0" x2="200" y2="500" />
+                            <line class="map-grid-line" x1="400" y1="0" x2="400" y2="500" />
+                            <line class="map-grid-line" x1="500" y1="0" x2="500" y2="500" />
+                            <line class="map-grid-line" x1="650" y1="0" x2="650" y2="500" />
+                            <line class="map-grid-line" x1="820" y1="0" x2="820" y2="500" />
 
-                                <!-- Latitude & Longitude Grid -->
-                                <line class="map-grid-line" x1="0" y1="85" x2="1000" y2="85" />
-                                <line class="map-grid-line" x1="0" y1="170" x2="1000" y2="170" />
-                                <line class="map-equator" x1="0" y1="275" x2="1000" y2="275" />
-                                <line class="map-grid-line" x1="0" y1="375" x2="1000" y2="375" />
-                                <line class="map-grid-line" x1="200" y1="0" x2="200" y2="500" />
-                                <line class="map-grid-line" x1="400" y1="0" x2="400" y2="500" />
-                                <line class="map-grid-line" x1="500" y1="0" x2="500" y2="500" />
-                                <line class="map-grid-line" x1="650" y1="0" x2="650" y2="500" />
-                                <line class="map-grid-line" x1="820" y1="0" x2="820" y2="500" />
+                            <text class="map-coord-text" x="14" y="270">ECUATOR 0°</text>
+                            <text class="map-coord-text" x="506" y="18">MERIDIAN 0°</text>
 
-                                <text class="map-coord-text" x="14" y="270">ECUATOR 0°</text>
-                                <text class="map-coord-text" x="506" y="18">MERIDIAN 0°</text>
+                            <!-- Detailed World Continents -->
+                            <!-- North America -->
+                            <path class="continent-land" d="M 75,70 L 145,55 L 225,62 L 285,82 L 295,120 L 265,152 L 245,180 L 210,195 L 185,222 L 160,210 L 135,175 L 105,130 L 65,98 Z" />
+                            <!-- Greenland -->
+                            <path class="continent-land" d="M 315,35 L 385,30 L 395,70 L 350,88 L 320,68 Z" />
+                            <!-- South America -->
+                            <path class="continent-land" d="M 235,255 L 295,265 L 335,310 L 315,375 L 275,445 L 250,440 L 245,360 L 220,305 Z" />
+                            <!-- UK & Ireland -->
+                            <path class="continent-land" d="M 455,108 L 472,105 L 476,128 L 456,130 Z" />
+                            <!-- Scandinavia -->
+                            <path class="continent-land" d="M 495,55 L 545,48 L 560,88 L 520,102 L 492,85 Z" />
+                            <!-- Continental Europe -->
+                            <path class="continent-land" d="M 452,145 L 485,125 L 535,112 L 585,115 L 605,158 L 565,178 L 535,185 L 512,175 L 485,182 L 450,176 Z" />
+                            <!-- Africa -->
+                            <path class="continent-land" d="M 455,198 L 525,195 L 575,215 L 598,265 L 570,335 L 535,395 L 502,390 L 488,315 L 442,275 L 438,230 Z" />
+                            <!-- Asia & Middle East & India -->
+                            <path class="continent-land" d="M 592,105 L 725,75 L 865,82 L 915,115 L 885,165 L 835,195 L 795,235 L 755,230 L 722,265 L 695,262 L 675,215 L 632,218 L 595,182 Z" />
+                            <!-- Japan -->
+                            <path class="continent-land" d="M 872,155 L 888,150 L 892,182 L 875,186 Z" />
+                            <!-- Southeast Asia Islands -->
+                            <path class="continent-land" d="M 765,265 L 815,270 L 830,295 L 775,292 Z" />
+                            <!-- Australia -->
+                            <path class="continent-land" d="M 805,335 L 895,330 L 915,385 L 875,418 L 810,405 L 795,370 Z" />
 
-                                <!-- Detailed World Continents -->
-                                <!-- North America -->
-                                <path class="continent-land" d="M 75,70 L 145,55 L 225,62 L 285,82 L 295,120 L 265,152 L 245,180 L 210,195 L 185,222 L 160,210 L 135,175 L 105,130 L 65,98 Z" />
-                                <!-- Greenland -->
-                                <path class="continent-land" d="M 315,35 L 385,30 L 395,70 L 350,88 L 320,68 Z" />
-                                <!-- South America -->
-                                <path class="continent-land" d="M 235,255 L 295,265 L 335,310 L 315,375 L 275,445 L 250,440 L 245,360 L 220,305 Z" />
-                                <!-- UK & Ireland -->
-                                <path class="continent-land" d="M 455,108 L 472,105 L 476,128 L 456,130 Z" />
-                                <!-- Scandinavia -->
-                                <path class="continent-land" d="M 495,55 L 545,48 L 560,88 L 520,102 L 492,85 Z" />
-                                <!-- Continental Europe -->
-                                <path class="continent-land" d="M 452,145 L 485,125 L 535,112 L 585,115 L 605,158 L 565,178 L 535,185 L 512,175 L 485,182 L 450,176 Z" />
-                                <!-- Africa -->
-                                <path class="continent-land" d="M 455,198 L 525,195 L 575,215 L 598,265 L 570,335 L 535,395 L 502,390 L 488,315 L 442,275 L 438,230 Z" />
-                                <!-- Asia & Middle East & India -->
-                                <path class="continent-land" d="M 592,105 L 725,75 L 865,82 L 915,115 L 885,165 L 835,195 L 795,235 L 755,230 L 722,265 L 695,262 L 675,215 L 632,218 L 595,182 Z" />
-                                <!-- Japan -->
-                                <path class="continent-land" d="M 872,155 L 888,150 L 892,182 L 875,186 Z" />
-                                <!-- Southeast Asia Islands -->
-                                <path class="continent-land" d="M 765,265 L 815,270 L 830,295 L 775,292 Z" />
-                                <!-- Australia -->
-                                <path class="continent-land" d="M 805,335 L 895,330 L 915,385 L 875,418 L 810,405 L 795,370 Z" />
+                            <!-- Individual Exact Path Segments Between Cities -->
+                            <!-- Seg 0->1: București(552,156) to Calcutta(712,226) -->
+                            <path class="route-bg-path" d="M 552,156 Q 635,165 712,226" />
+                            <!-- Seg 1->2: Calcutta(712,226) to Londra(468,122) -->
+                            <path class="route-bg-path" d="M 712,226 Q 605,70 468,122" />
+                            <!-- Seg 2->3: Londra(468,122) to Lisabona(452,168) -->
+                            <path class="route-bg-path" d="M 468,122 Q 445,145 452,168" />
+                            <!-- Seg 3->4: Lisabona(452,168) to Chicago(226,144) -->
+                            <path class="route-bg-path" d="M 452,168 Q 345,95 226,144" />
 
-                                <!-- Full Planned Route (Dashed Background) -->
-                                <path id="fullRoutePath" class="route-bg-path"
-                                      d="M 552,156 Q 635,165 712,226 Q 605,70 468,122 Q 450,145 452,168 Q 345,95 226,144" />
+                            <!-- Active Drawn Route Segments -->
+                            <path id="seg-0" class="route-active-path" d="M 552,156 Q 635,165 712,226" />
+                            <path id="seg-1" class="route-active-path" d="M 712,226 Q 605,70 468,122" />
+                            <path id="seg-2" class="route-active-path" d="M 468,122 Q 445,145 452,168" />
+                            <path id="seg-3" class="route-active-path" d="M 452,168 Q 345,95 226,144" />
 
-                                <!-- Animated Active Route Segment -->
-                                <path id="activeRoutePath" class="route-active-path"
-                                      d="M 552,156 Q 635,165 712,226 Q 605,70 468,122 Q 450,145 452,168 Q 345,95 226,144" />
+                            <!-- City Nodes -->
+                            <!-- 0: București (552, 156) -->
+                            <g class="city-node" id="node-0" onclick="travelToCity(0)">
+                                <circle cx="552" cy="156" r="18" fill="transparent" />
+                                <circle class="city-pulse" cx="552" cy="156" r="6" />
+                                <circle class="city-dot" cx="552" cy="156" r="6" />
+                                <rect class="city-label-bg" x="562" y="145" width="68" height="20" rx="6" />
+                                <text class="city-label" x="569" y="159">București</text>
+                            </g>
 
-                                <!-- City Nodes (with larger invisible tap target r=18 for mobile fingers) -->
-                                <!-- 0: București (552, 156) -->
-                                <g class="city-node initial-pulse" id="node-0" onclick="selectCity(0)">
-                                    <circle cx="552" cy="156" r="18" fill="transparent" />
-                                    <circle class="city-pulse" cx="552" cy="156" r="6" />
-                                    <circle class="city-dot" cx="552" cy="156" r="6" />
-                                    <rect class="city-label-bg" x="562" y="145" width="68" height="20" rx="6" />
-                                    <text class="city-label" x="569" y="159">București</text>
-                                </g>
+                            <!-- 1: Calcutta (712, 226) -->
+                            <g class="city-node" id="node-1" onclick="travelToCity(1)">
+                                <circle cx="712" cy="226" r="18" fill="transparent" />
+                                <circle class="city-pulse" cx="712" cy="226" r="6" />
+                                <circle class="city-dot" cx="712" cy="226" r="6" />
+                                <rect class="city-label-bg" x="722" y="216" width="62" height="20" rx="6" />
+                                <text class="city-label" x="729" y="230">Calcutta</text>
+                            </g>
 
-                                <!-- 1: Calcutta (712, 226) -->
-                                <g class="city-node" id="node-1" onclick="selectCity(1)">
-                                    <circle cx="712" cy="226" r="18" fill="transparent" />
-                                    <circle class="city-pulse" cx="712" cy="226" r="6" />
-                                    <circle class="city-dot" cx="712" cy="226" r="6" />
-                                    <rect class="city-label-bg" x="722" y="216" width="62" height="20" rx="6" />
-                                    <text class="city-label" x="729" y="230">Calcutta</text>
-                                </g>
+                            <!-- 2: Londra (468, 122) -->
+                            <g class="city-node" id="node-2" onclick="travelToCity(2)">
+                                <circle cx="468" cy="122" r="18" fill="transparent" />
+                                <circle class="city-pulse" cx="468" cy="122" r="6" />
+                                <circle class="city-dot" cx="468" cy="122" r="6" />
+                                <rect class="city-label-bg" x="478" y="106" width="56" height="20" rx="6" />
+                                <text class="city-label" x="485" y="120">Londra</text>
+                            </g>
 
-                                <!-- 2: Londra (468, 122) -->
-                                <g class="city-node" id="node-2" onclick="selectCity(2)">
-                                    <circle cx="468" cy="122" r="18" fill="transparent" />
-                                    <circle class="city-pulse" cx="468" cy="122" r="6" />
-                                    <circle class="city-dot" cx="468" cy="122" r="6" />
-                                    <rect class="city-label-bg" x="478" y="106" width="56" height="20" rx="6" />
-                                    <text class="city-label" x="485" y="120">Londra</text>
-                                </g>
+                            <!-- 3: Lisabona (452, 168) -->
+                            <g class="city-node" id="node-3" onclick="travelToCity(3)">
+                                <circle cx="452" cy="168" r="18" fill="transparent" />
+                                <circle class="city-pulse" cx="452" cy="168" r="6" />
+                                <circle class="city-dot" cx="452" cy="168" r="6" />
+                                <rect class="city-label-bg" x="378" y="162" width="64" height="20" rx="6" />
+                                <text class="city-label" x="385" y="176">Lisabona</text>
+                            </g>
 
-                                <!-- 3: Lisabona (452, 168) -->
-                                <g class="city-node" id="node-3" onclick="selectCity(3)">
-                                    <circle cx="452" cy="168" r="18" fill="transparent" />
-                                    <circle class="city-pulse" cx="452" cy="168" r="6" />
-                                    <circle class="city-dot" cx="452" cy="168" r="6" />
-                                    <rect class="city-label-bg" x="378" y="162" width="64" height="20" rx="6" />
-                                    <text class="city-label" x="385" y="176">Lisabona</text>
-                                </g>
+                            <!-- 4: Chicago (226, 144) -->
+                            <g class="city-node" id="node-4" onclick="travelToCity(4)">
+                                <circle cx="226" cy="144" r="18" fill="transparent" />
+                                <circle class="city-pulse" cx="226" cy="144" r="6" />
+                                <circle class="city-dot" cx="226" cy="144" r="6" />
+                                <rect class="city-label-bg" x="152" y="132" width="64" height="20" rx="6" />
+                                <text class="city-label" x="159" y="146">Chicago</text>
+                            </g>
 
-                                <!-- 4: Chicago (226, 144) -->
-                                <g class="city-node" id="node-4" onclick="selectCity(4)">
-                                    <circle cx="226" cy="144" r="18" fill="transparent" />
-                                    <circle class="city-pulse" cx="226" cy="144" r="6" />
-                                    <circle class="city-dot" cx="226" cy="144" r="6" />
-                                    <rect class="city-label-bg" x="152" y="132" width="64" height="20" rx="6" />
-                                    <text class="city-label" x="159" y="146">Chicago</text>
-                                </g>
-
-                                <!-- Animated Traveler Beacon -->
-                                <g id="travelerBeacon" transform="translate(552, 156)">
-                                    <circle r="12" fill="rgba(45, 212, 191, 0.28)" />
-                                    <circle r="5.5" fill="#ffffff" stroke="#2dd4bf" stroke-width="2" />
-                                </g>
-                            </svg>
-                        </div>
-
-                        <!-- Initial Prompt Bar on Map -->
-                        <div class="map-start-overlay" id="mapStartOverlay">
-                            <span style="color: var(--gold-soft); font-size: 0.82rem;">🌍 Atinge un oraș de pe hartă pentru detalii</span>
-                            <button class="btn-primary" style="padding: 7px 16px; font-size: 0.78rem;" onclick="selectCity(0)">Începe traseul →</button>
-                        </div>
+                            <!-- Animated Traveler Beacon -->
+                            <g id="travelerBeacon" transform="translate(552, 156)">
+                                <circle r="13" fill="rgba(45, 212, 191, 0.3)" />
+                                <circle r="5.5" fill="#ffffff" stroke="#2dd4bf" stroke-width="2.2" />
+                            </g>
+                        </svg>
                     </div>
 
-                    <!-- City Info Card (Hidden until a city is selected) -->
-                    <div class="route-info-panel" id="routeInfoPanel">
-                        <div>
-                            <div class="route-step-counter" id="routeStep"></div>
-                            <h3 class="route-city-title" id="routeCityName"></h3>
-                            <div class="route-city-years" id="routeCityYears"></div>
-                            <p id="routeCityDesc" style="color: #d1d5db; font-size: 0.93rem;"></p>
+                    <!-- Pop-out Info Card Emerging From Active City Point -->
+                    <div class="city-popout-card" id="cityPopoutCard">
+                        <div class="popout-header">
+                            <div>
+                                <div class="route-step-counter" id="routeStep"></div>
+                                <h3 class="route-city-title" id="routeCityName"></h3>
+                            </div>
+                            <span class="route-city-years" id="routeCityYears"></span>
                         </div>
+                        <p id="routeCityDesc" style="color: #d1d5db; font-size: 0.94rem;"></p>
 
-                        <div class="route-nav-btns">
-                            <button class="btn-outline" onclick="stepCity(-1)">← Anterior</button>
-                            <button class="btn-primary" style="padding: 9px 18px; font-size: 0.84rem;" onclick="stepCity(1)">Următorul →</button>
+                        <div class="popout-footer">
+                            <button class="btn-outline" onclick="resetJourney()">↺ Înapoi la hartă</button>
+                            <button class="btn-primary" id="nextJourneyBtn" style="padding: 10px 22px; font-size: 0.86rem;" onclick="advanceJourney()">Mergem mai departe →</button>
                         </div>
+                    </div>
+
+                    <!-- Initial Start Button Below Map -->
+                    <div class="map-bottom-action" id="mapBottomAction">
+                        <button class="btn-primary" onclick="startJourney()">🧭 Începem călătoria →</button>
                     </div>
                 </div>
             </div>
@@ -1985,7 +1925,7 @@
         });
 
         // ==========================================
-        // 2. DETAILED WORLD MAP & ANIMATED ROUTE
+        // 2. SEQUENTIAL WORLD JOURNEY MAP ANIMATION
         // ==========================================
         const citiesData = [
             {
@@ -1993,159 +1933,231 @@
                 name: 'București, România',
                 years: '1907 – 1928 • 1931 – 1940',
                 desc: 'Orașul natal unde își formează cultura enciclopedică, debutează în presă încă din liceu și devine liderul spiritual al tinerei generații interbelice.',
-                progress: 0.0,
-                scrollRatio: 0.52
+                x: 552, y: 156,
+                originX: '55.2%'
             },
             {
                 step: 'Etapa 2 din 5 • Fascinația Orientului',
                 name: 'Calcutta, India',
                 years: '1928 – 1931',
                 desc: 'Studiază filosofia indiană și sanscrita, locuiește în casa profesorului Dasgupta și trăiește povestea care va da naștere capodoperei „Maitreyi”.',
-                progress: 0.25,
-                scrollRatio: 0.72
+                x: 712, y: 226,
+                originX: '71.2%'
             },
             {
                 step: 'Etapa 3 din 5 • Misiune diplomatică',
                 name: 'Londra, Marea Britanie',
                 years: '1940 – 1941',
                 desc: 'Activează ca atașat cultural al României la Londra în plin război mondial, continuând cercetările sale asupra simbolurilor și miturilor.',
-                progress: 0.56,
-                scrollRatio: 0.44
+                x: 468, y: 122,
+                originX: '46.8%'
             },
             {
                 step: 'Etapa 4 din 5 • Refugiu și creație',
                 name: 'Lisabona, Portugalia',
                 years: '1941 – 1945',
                 desc: 'La țărmul Oceanului Atlantic scrie lucrări fundamentale de istorie a religiilor și reflectează asupra destinului culturii române.',
-                progress: 0.67,
-                scrollRatio: 0.42
+                x: 452, y: 168,
+                originX: '45.2%'
             },
             {
                 step: 'Etapa 5 din 5 • Consacrare universală',
                 name: 'Chicago, Statele Unite',
                 years: '1956 – 1986',
                 desc: 'Conduce catedra de Istorie a Religiilor la Universitatea din Chicago, publică mari sinteze științifice și capodoperele sale fantastice.',
-                progress: 1.0,
-                scrollRatio: 0.16
+                x: 226, y: 144,
+                originX: '22.6%'
             }
         ];
 
-        let currentCityIndex = -1;
-        let beaconAnimFrame = null;
-        const activeRoutePath = document.getElementById('activeRoutePath');
-        const travelerBeacon = document.getElementById('travelerBeacon');
-        const totalPathLength = activeRoutePath.getTotalLength();
+        const segmentPaths = [
+            document.getElementById('seg-0'),
+            document.getElementById('seg-1'),
+            document.getElementById('seg-2'),
+            document.getElementById('seg-3')
+        ];
 
-        activeRoutePath.style.strokeDasharray = totalPathLength;
-        activeRoutePath.style.strokeDashoffset = totalPathLength;
-
-        // Center Europe initially on mobile map
-        window.addEventListener('load', () => {
-            const vp = document.getElementById('mapViewport');
-            if (vp && window.innerWidth <= 768) {
-                vp.scrollLeft = (vp.scrollWidth - vp.clientWidth) * 0.52;
-            }
+        // Initialize all 4 route segments as hidden
+        segmentPaths.forEach(seg => {
+            const len = seg.getTotalLength();
+            seg.style.strokeDasharray = len;
+            seg.style.strokeDashoffset = len;
         });
 
-        function selectCity(targetIndex) {
-            if (targetIndex < 0) targetIndex = citiesData.length - 1;
-            if (targetIndex >= citiesData.length) targetIndex = 0;
+        let currentCityIndex = -1;
+        let isAnimatingTravel = false;
+        const travelerBeacon = document.getElementById('travelerBeacon');
+        const popoutCard = document.getElementById('cityPopoutCard');
 
-            const isFirstSelection = (currentCityIndex === -1);
-            const prevIndex = isFirstSelection ? 0 : currentCityIndex;
-            const prevCity = citiesData[prevIndex];
-            const nextCity = citiesData[targetIndex];
-            currentCityIndex = targetIndex;
+        function populateCardContent(idx) {
+            const city = citiesData[idx];
+            document.getElementById('routeStep').textContent = city.step;
+            document.getElementById('routeCityName').textContent = city.name;
+            document.getElementById('routeCityYears').textContent = city.years;
+            document.getElementById('routeCityDesc').textContent = city.desc;
 
-            // Reveal Info Panel & Hide Initial Map Overlay
-            document.getElementById('routeLayout').classList.add('has-selection');
-            document.getElementById('mapStartOverlay').classList.add('hidden');
-            document.getElementById('resetMapBtn').style.display = 'inline-block';
-            travelerBeacon.classList.add('visible');
-
-            // Auto-scroll mobile map smoothly to the target continent/city
-            const vp = document.getElementById('mapViewport');
-            if (vp && window.innerWidth <= 768) {
-                const maxScroll = vp.scrollWidth - vp.clientWidth;
-                vp.scrollTo({ left: maxScroll * nextCity.scrollRatio, behavior: 'smooth' });
+            const nextBtn = document.getElementById('nextJourneyBtn');
+            if (idx === citiesData.length - 1) {
+                nextBtn.textContent = '↻ Reia de la București';
+            } else {
+                nextBtn.textContent = 'Mergem mai departe →';
             }
+        }
 
-            // Update Tabs & scroll active tab into view
-            document.querySelectorAll('.route-tab').forEach((tab, idx) => {
-                tab.classList.toggle('active', idx === targetIndex);
-                if (idx === targetIndex && window.innerWidth <= 768) {
-                    tab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-                }
-            });
-
-            // Deactivate previous node smoothly & activate current node
+        function updateCityNodeStates(activeIdx) {
             document.querySelectorAll('.city-node').forEach((node, idx) => {
-                node.classList.remove('active', 'initial-pulse');
-                node.classList.toggle('visited', idx < targetIndex);
+                node.classList.toggle('active', idx === activeIdx);
+                node.classList.toggle('visited', idx < activeIdx);
             });
-            document.getElementById('node-' + targetIndex).classList.add('active');
+        }
 
-            // Draw SVG Route Line smoothly
-            const targetOffset = totalPathLength * (1 - nextCity.progress);
-            activeRoutePath.style.strokeDashoffset = targetOffset;
+        function setDrawnSegmentsUpTo(targetIdx) {
+            segmentPaths.forEach((seg, segIdx) => {
+                const len = seg.getTotalLength();
+                seg.style.strokeDashoffset = (segIdx < targetIdx) ? 0 : len;
+            });
+        }
 
-            // Animate Traveler Beacon along SVG Path
-            if (beaconAnimFrame) cancelAnimationFrame(beaconAnimFrame);
-            const startProg = prevCity.progress;
-            const endProg = nextCity.progress;
-            const duration = isFirstSelection ? 400 : 1100;
-            const startTime = performance.now();
+        function startJourney() {
+            if (isAnimatingTravel) return;
+            currentCityIndex = 0;
+            const startCity = citiesData[0];
 
-            function animateBeacon(now) {
-                const elapsed = now - startTime;
-                const t = Math.min(elapsed / duration, 1);
-                const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-                const currentProg = startProg + (endProg - startProg) * ease;
-                const pt = activeRoutePath.getPointAtLength(totalPathLength * currentProg);
-                travelerBeacon.setAttribute('transform', `translate(${pt.x}, ${pt.y})`);
+            // Hide start button below map
+            document.getElementById('mapBottomAction').classList.add('hidden');
 
-                if (t < 1) {
-                    beaconAnimFrame = requestAnimationFrame(animateBeacon);
+            // Place beacon directly on Bucharest
+            travelerBeacon.setAttribute('transform', `translate(${startCity.x}, ${startCity.y})`);
+            travelerBeacon.classList.add('visible');
+            updateCityNodeStates(0);
+            setDrawnSegmentsUpTo(0);
+
+            // Emerge card directly out of Bucharest point
+            populateCardContent(0);
+            popoutCard.style.transformOrigin = `${startCity.originX} 0%`;
+            requestAnimationFrame(() => {
+                popoutCard.classList.add('open');
+            });
+        }
+
+        function advanceJourney() {
+            if (isAnimatingTravel) return;
+            const nextIdx = (currentCityIndex + 1) % citiesData.length;
+            travelToCity(nextIdx);
+        }
+
+        function travelToCity(targetIndex) {
+            if (isAnimatingTravel || targetIndex === currentCityIndex) return;
+            if (currentCityIndex === -1) {
+                if (targetIndex === 0) {
+                    startJourney();
+                    return;
                 }
+                currentCityIndex = 0;
+                document.getElementById('mapBottomAction').classList.add('hidden');
+                travelerBeacon.setAttribute('transform', `translate(${citiesData[0].x}, ${citiesData[0].y})`);
+                travelerBeacon.classList.add('visible');
             }
-            beaconAnimFrame = requestAnimationFrame(animateBeacon);
 
-            // Update Info Panel Content with Smooth Transition
-            const panel = document.getElementById('routeInfoPanel');
-            if (!isFirstSelection) {
-                panel.classList.add('switching');
-            }
+            isAnimatingTravel = true;
+            const fromIdx = currentCityIndex;
+            const fromCity = citiesData[fromIdx];
+            const toCity = citiesData[targetIndex];
+
+            // 1. Fold card back INTO the current city point
+            popoutCard.style.transformOrigin = `${fromCity.originX} 0%`;
+            popoutCard.classList.remove('open');
+
+            // 2. After card folds into the point, travel along the exact path to the next point
+            setTimeout(() => {
+                // If moving sequentially forward by 1 step, animate along the exact SVG curve segment
+                if (targetIndex === fromIdx + 1) {
+                    const seg = segmentPaths[fromIdx];
+                    const segLen = seg.getTotalLength();
+                    const duration = 1150;
+                    const startTime = performance.now();
+
+                    // Deactivate old node pulse during flight
+                    document.getElementById('node-' + fromIdx).classList.remove('active');
+                    document.getElementById('node-' + fromIdx).classList.add('visited');
+
+                    function stepFlight(now) {
+                        const elapsed = now - startTime;
+                        const t = Math.min(elapsed / duration, 1);
+                        const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+                        // Draw line simultaneously with beacon movement
+                        seg.style.strokeDashoffset = segLen * (1 - ease);
+
+                        // Move beacon to exact point on curve (and lock exact destination coordinates at t=1)
+                        if (t < 1) {
+                            const pt = seg.getPointAtLength(segLen * ease);
+                            travelerBeacon.setAttribute('transform', `translate(${pt.x}, ${pt.y})`);
+                            requestAnimationFrame(stepFlight);
+                        } else {
+                            // Exact arrival at destination city coordinates!
+                            travelerBeacon.setAttribute('transform', `translate(${toCity.x}, ${toCity.y})`);
+                            currentCityIndex = targetIndex;
+                            updateCityNodeStates(targetIndex);
+
+                            // 3. Emerge new info card directly out of the destination point
+                            populateCardContent(targetIndex);
+                            popoutCard.style.transformOrigin = `${toCity.originX} 0%`;
+                            requestAnimationFrame(() => {
+                                popoutCard.classList.add('open');
+                                isAnimatingTravel = false;
+                            });
+                        }
+                    }
+                    requestAnimationFrame(stepFlight);
+                } else {
+                    // Direct jump (e.g., resetting from Chicago back to București or clicking a non-adjacent city)
+                    const duration = 850;
+                    const startTime = performance.now();
+                    setDrawnSegmentsUpTo(targetIndex);
+
+                    function stepDirectFlight(now) {
+                        const elapsed = now - startTime;
+                        const t = Math.min(elapsed / duration, 1);
+                        const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+                        const curX = fromCity.x + (toCity.x - fromCity.x) * ease;
+                        const curY = fromCity.y + (toCity.y - fromCity.y) * ease - Math.sin(Math.PI * ease) * 45;
+                        travelerBeacon.setAttribute('transform', `translate(${curX}, ${curY})`);
+
+                        if (t < 1) {
+                            requestAnimationFrame(stepDirectFlight);
+                        } else {
+                            travelerBeacon.setAttribute('transform', `translate(${toCity.x}, ${toCity.y})`);
+                            currentCityIndex = targetIndex;
+                            updateCityNodeStates(targetIndex);
+
+                            populateCardContent(targetIndex);
+                            popoutCard.style.transformOrigin = `${toCity.originX} 0%`;
+                            requestAnimationFrame(() => {
+                                popoutCard.classList.add('open');
+                                isAnimatingTravel = false;
+                            });
+                        }
+                    }
+                    requestAnimationFrame(stepDirectFlight);
+                }
+            }, 420);
+        }
+
+        function resetJourney() {
+            if (isAnimatingTravel) return;
+            const curCity = currentCityIndex >= 0 ? citiesData[currentCityIndex] : citiesData[0];
+            popoutCard.style.transformOrigin = `${curCity.originX} 0%`;
+            popoutCard.classList.remove('open');
 
             setTimeout(() => {
-                document.getElementById('routeStep').textContent = nextCity.step;
-                document.getElementById('routeCityName').textContent = nextCity.name;
-                document.getElementById('routeCityYears').textContent = nextCity.years;
-                document.getElementById('routeCityDesc').textContent = nextCity.desc;
-                panel.classList.remove('switching');
-            }, isFirstSelection ? 40 : 250);
-        }
-
-        function stepCity(delta) {
-            if (currentCityIndex === -1) {
-                selectCity(0);
-            } else {
-                selectCity(currentCityIndex + delta);
-            }
-        }
-
-        function resetMapView() {
-            currentCityIndex = -1;
-            document.getElementById('routeLayout').classList.remove('has-selection');
-            document.getElementById('mapStartOverlay').classList.remove('hidden');
-            document.getElementById('resetMapBtn').style.display = 'none';
-            travelerBeacon.classList.remove('visible');
-            activeRoutePath.style.strokeDashoffset = totalPathLength;
-
-            document.querySelectorAll('.route-tab').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.city-node').forEach((node, idx) => {
-                node.classList.remove('active', 'visited');
-                if (idx === 0) node.classList.add('initial-pulse');
-            });
+                currentCityIndex = -1;
+                travelerBeacon.classList.remove('visible');
+                setDrawnSegmentsUpTo(0);
+                updateCityNodeStates(-1);
+                document.getElementById('mapBottomAction').classList.remove('hidden');
+            }, 420);
         }
 
         // ==========================================
