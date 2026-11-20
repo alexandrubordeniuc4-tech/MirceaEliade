@@ -533,7 +533,7 @@
         }
 
         /* ==========================================
-           HIGH-DETAIL CINEMATIC WORLD MAP
+           ULTRA-DETAILED GEOGRAPHIC VECTOR MAP (D3)
            ========================================== */
         .route-card {
             padding: 20px;
@@ -545,12 +545,12 @@
             position: relative;
             width: 100%;
             aspect-ratio: 2 / 1;
-            min-height: 430px;
+            min-height: 440px;
             border-radius: 20px;
-            background: radial-gradient(circle at 52% 42%, #0e1c33 0%, #070d19 60%, #04060c 100%);
-            border: 1px solid rgba(226, 184, 87, 0.22);
+            background: radial-gradient(circle at 50% 42%, #0d1d36 0%, #060b17 65%, #03050a 100%);
+            border: 1px solid rgba(226, 184, 87, 0.25);
             overflow: hidden;
-            box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.88);
+            box-shadow: inset 0 0 65px rgba(0, 0, 0, 0.9);
         }
 
         .map-camera-layer {
@@ -567,109 +567,96 @@
             display: block;
         }
 
-        /* Detailed Cartographic Styling */
-        .map-grid-major {
-            stroke: rgba(255, 255, 255, 0.06);
+        /* Real GeoJSON Country & Graticule Styles */
+        .graticule-line {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.045);
+            stroke-width: 0.45;
+        }
+
+        .equator-line {
+            fill: none;
+            stroke: rgba(45, 212, 191, 0.24);
             stroke-width: 0.8;
+            stroke-dasharray: 4 4;
         }
 
-        .map-grid-minor {
-            stroke: rgba(255, 255, 255, 0.025);
-            stroke-width: 0.5;
-        }
-
-        .map-equator {
-            stroke: rgba(45, 212, 191, 0.22);
-            stroke-width: 0.9;
-            stroke-dasharray: 5 4;
-        }
-
-        .map-tropic {
+        .tropic-line {
+            fill: none;
             stroke: rgba(226, 184, 87, 0.14);
-            stroke-width: 0.7;
-            stroke-dasharray: 3 5;
-        }
-
-        .continent-shelf {
-            fill: rgba(45, 212, 191, 0.045);
-            stroke: none;
-        }
-
-        .continent-land {
-            fill: url(#landGrad);
-            stroke: rgba(226, 184, 87, 0.42);
-            stroke-width: 1.05;
-            stroke-linejoin: round;
-            filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.65));
-        }
-
-        .continent-topo {
-            fill: none;
-            stroke: rgba(255, 255, 255, 0.07);
-            stroke-width: 0.65;
-            stroke-linejoin: round;
-        }
-
-        .country-border {
-            fill: none;
-            stroke: rgba(226, 184, 87, 0.18);
             stroke-width: 0.6;
-            stroke-dasharray: 2 2;
+            stroke-dasharray: 2 4;
         }
 
-        .mountain-range {
-            fill: none;
-            stroke: rgba(245, 215, 142, 0.22);
-            stroke-width: 1.1;
-            stroke-linecap: round;
+        .country-path {
+            fill: rgba(24, 34, 54, 0.85);
+            stroke: rgba(226, 184, 87, 0.24);
+            stroke-width: 0.45;
             stroke-linejoin: round;
+            transition: fill 0.3s ease;
         }
 
-        .great-lake {
-            fill: #081224;
-            stroke: rgba(45, 212, 191, 0.35);
-            stroke-width: 0.7;
+        .country-path.highlighted-country {
+            fill: rgba(226, 184, 87, 0.19);
+            stroke: rgba(226, 184, 87, 0.58);
+            stroke-width: 0.75;
+        }
+
+        .coastline-glow {
+            fill: none;
+            stroke: rgba(45, 212, 191, 0.18);
+            stroke-width: 1.6;
+            stroke-linejoin: round;
+            pointer-events: none;
+        }
+
+        .river-path {
+            fill: none;
+            stroke: rgba(56, 189, 248, 0.32);
+            stroke-width: 0.65;
+            stroke-linecap: round;
+            pointer-events: none;
         }
 
         .ocean-label {
             fill: rgba(147, 197, 253, 0.22);
             font-family: 'Cinzel', serif;
-            font-size: 11px;
+            font-size: 10px;
             letter-spacing: 3px;
             font-weight: 600;
             pointer-events: none;
         }
 
         .region-label {
-            fill: rgba(226, 184, 87, 0.38);
+            fill: rgba(245, 215, 142, 0.55);
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 7.5px;
-            letter-spacing: 1.5px;
+            font-size: 6.5px;
+            letter-spacing: 1.2px;
             text-transform: uppercase;
-            font-weight: 600;
+            font-weight: 700;
             pointer-events: none;
         }
 
         .map-coord-text {
             fill: rgba(255, 255, 255, 0.26);
-            font-size: 7.5px;
+            font-size: 7px;
             font-family: monospace;
             pointer-events: none;
         }
 
         .route-bg-path {
             fill: none;
-            stroke: rgba(255, 255, 255, 0.18);
-            stroke-width: 1.6;
-            stroke-dasharray: 4 4;
+            stroke: rgba(255, 255, 255, 0.22);
+            stroke-width: 1.3;
+            stroke-dasharray: 3.5 3.5;
         }
 
         .route-active-path {
             fill: none;
             stroke: url(#routeGrad);
-            stroke-width: 3.2;
+            stroke-width: 2.6;
             stroke-linecap: round;
-            filter: drop-shadow(0 0 8px rgba(226, 184, 87, 0.9));
+            filter: drop-shadow(0 0 6px rgba(226, 184, 87, 0.9));
         }
 
         .city-node {
@@ -679,7 +666,7 @@
         .city-pulse {
             fill: none;
             stroke: var(--gold);
-            stroke-width: 1.8;
+            stroke-width: 1.5;
             opacity: 0;
         }
 
@@ -688,14 +675,14 @@
         }
 
         @keyframes cityPulseAnim {
-            0% { r: 6; opacity: 0.95; }
-            100% { r: 26; opacity: 0; }
+            0% { r: 5; opacity: 0.95; }
+            100% { r: 22; opacity: 0; }
         }
 
         .city-dot {
             fill: #1f2937;
-            stroke: rgba(255, 255, 255, 0.65);
-            stroke-width: 2;
+            stroke: rgba(255, 255, 255, 0.75);
+            stroke-width: 1.6;
             transition: all 0.4s ease;
         }
 
@@ -707,14 +694,14 @@
         .city-node.active .city-dot {
             fill: var(--gold);
             stroke: #fff;
-            r: 7.5;
-            filter: drop-shadow(0 0 12px var(--gold));
+            r: 6.5;
+            filter: drop-shadow(0 0 10px var(--gold));
         }
 
         .city-label-bg {
-            fill: rgba(7, 9, 16, 0.88);
-            stroke: rgba(255, 255, 255, 0.18);
-            stroke-width: 0.85;
+            fill: rgba(7, 9, 16, 0.9);
+            stroke: rgba(255, 255, 255, 0.22);
+            stroke-width: 0.75;
             transition: all 0.35s ease;
         }
 
@@ -725,7 +712,7 @@
 
         .city-label {
             fill: #e5e7eb;
-            font-size: 10.5px;
+            font-size: 9.5px;
             font-weight: 600;
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
@@ -736,7 +723,7 @@
         }
 
         #travelerBeacon {
-            filter: drop-shadow(0 0 14px #2dd4bf);
+            filter: drop-shadow(0 0 12px #2dd4bf);
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.25s ease;
@@ -748,12 +735,11 @@
 
         .beacon-sonar {
             animation: sonarWave 1.4s infinite ease-out;
-            transform-origin: center;
         }
 
         @keyframes sonarWave {
-            0% { r: 6; opacity: 0.9; }
-            100% { r: 24; opacity: 0; }
+            0% { r: 5; opacity: 0.9; }
+            100% { r: 20; opacity: 0; }
         }
 
         /* Cinematic Camera HUD badge during zoom tracking */
@@ -767,7 +753,7 @@
             gap: 7px;
             padding: 5px 11px;
             border-radius: 20px;
-            background: rgba(7, 9, 16, 0.82);
+            background: rgba(7, 9, 16, 0.84);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(45, 212, 191, 0.35);
             color: var(--accent-teal);
@@ -1341,8 +1327,8 @@
             }
             .map-viewport {
                 aspect-ratio: auto;
-                height: 390px;
-                min-height: 390px;
+                height: 400px;
+                min-height: 400px;
             }
             .pin-popover {
                 width: calc(100% - 20px);
@@ -1537,7 +1523,7 @@
             </div>
         </section>
 
-        <!-- 3. HIGH-DETAIL CINEMATIC ZOOM WORLD MAP -->
+        <!-- 3. HIGH-PRECISION REAL WORLD VECTOR MAP (177 COUNTRIES + RIVERS + CINEMATIC ZOOM) -->
         <section id="itinerariu">
             <div class="reveal">
                 <div class="section-badge">02 • Harta lumii și călătoriile</div>
@@ -1555,7 +1541,7 @@
                         <span id="cameraHudText">Urmărire traseu...</span>
                     </div>
 
-                    <!-- Zoomable & Pannable High-Detail Map Layer -->
+                    <!-- Zoomable & Pannable Real GeoJSON Map Layer -->
                     <div class="map-camera-layer" id="mapCameraLayer">
                         <svg class="map-svg" viewBox="0 0 1000 500" preserveAspectRatio="none" id="travelMapSvg">
                             <defs>
@@ -1564,212 +1550,34 @@
                                     <stop offset="50%" stop-color="#e2b857" />
                                     <stop offset="100%" stop-color="#ffffff" />
                                 </linearGradient>
-                                <linearGradient id="landGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                                    <stop offset="0%" stop-color="rgba(226, 184, 87, 0.16)" />
-                                    <stop offset="50%" stop-color="rgba(212, 175, 55, 0.10)" />
-                                    <stop offset="100%" stop-color="rgba(45, 212, 191, 0.08)" />
-                                </linearGradient>
-                                <radialGradient id="oceanGlow" cx="50%" cy="45%" r="55%">
-                                    <stop offset="0%" stop-color="rgba(30, 58, 138, 0.25)" />
-                                    <stop offset="100%" stop-color="rgba(4, 6, 12, 0)" />
+                                <radialGradient id="oceanGlow" cx="50%" cy="45%" r="58%">
+                                    <stop offset="0%" stop-color="rgba(30, 58, 138, 0.28)" />
+                                    <stop offset="100%" stop-color="rgba(3, 5, 10, 0)" />
                                 </radialGradient>
                             </defs>
 
-                            <!-- Ocean Depth Glow -->
                             <rect x="0" y="0" width="1000" height="500" fill="url(#oceanGlow)" />
 
-                            <!-- Minor & Major Cartographic Grid -->
-                            <line class="map-grid-minor" x1="0" y1="45" x2="1000" y2="45" />
-                            <line class="map-grid-major" x1="0" y1="90" x2="1000" y2="90" />
-                            <line class="map-grid-minor" x1="0" y1="135" x2="1000" y2="135" />
-                            <line class="map-grid-major" x1="0" y1="180" x2="1000" y2="180" />
-                            <line class="map-tropic" x1="0" y1="215" x2="1000" y2="215" />
-                            <line class="map-equator" x1="0" y1="275" x2="1000" y2="275" />
-                            <line class="map-tropic" x1="0" y1="335" x2="1000" y2="335" />
-                            <line class="map-grid-major" x1="0" y1="395" x2="1000" y2="395" />
-                            <line class="map-grid-minor" x1="0" y1="450" x2="1000" y2="450" />
+                            <!-- Dynamic Real-World GeoJSON Layers Populated via D3 -->
+                            <g id="geoGraticuleLayer"></g>
+                            <g id="geoCoastGlowLayer"></g>
+                            <g id="geoCountriesLayer"></g>
+                            <g id="geoRiversLayer"></g>
+                            <g id="geoLabelsLayer"></g>
 
-                            <line class="map-grid-minor" x1="100" y1="0" x2="100" y2="500" />
-                            <line class="map-grid-major" x1="200" y1="0" x2="200" y2="500" />
-                            <line class="map-grid-minor" x1="300" y1="0" x2="300" y2="500" />
-                            <line class="map-grid-major" x1="400" y1="0" x2="400" y2="500" />
-                            <line class="map-grid-major" x1="482" y1="0" x2="482" y2="500" />
-                            <line class="map-grid-minor" x1="580" y1="0" x2="580" y2="500" />
-                            <line class="map-grid-major" x1="680" y1="0" x2="680" y2="500" />
-                            <line class="map-grid-minor" x1="780" y1="0" x2="780" y2="500" />
-                            <line class="map-grid-major" x1="880" y1="0" x2="880" y2="500" />
+                            <!-- Route Paths Layer -->
+                            <g id="geoRouteBgLayer"></g>
+                            <g id="geoRouteActiveLayer"></g>
 
-                            <!-- Latitude & Longitude Labels -->
-                            <text class="map-coord-text" x="12" y="87">60°N</text>
-                            <text class="map-coord-text" x="12" y="177">35°N</text>
-                            <text class="map-coord-text" x="12" y="212">TROPICUL RACULUI 23°26'N</text>
-                            <text class="map-coord-text" x="12" y="271">ECUATOR 0°</text>
-                            <text class="map-coord-text" x="12" y="332">TROPICUL CAPRICORNULUI 23°26'S</text>
-                            <text class="map-coord-text" x="486" y="15">MERIDIAN 0°</text>
-
-                            <!-- Ocean Names -->
-                            <text class="ocean-label" x="315" y="220">OCEANUL ATLANTIC</text>
-                            <text class="ocean-label" x="635" y="315">OCEANUL INDIAN</text>
-                            <text class="ocean-label" x="55" y="305">OCEANUL PACIFIC</text>
-
-                            <!-- Compass Rose in South Atlantic -->
-                            <g transform="translate(380, 365)" opacity="0.32">
-                                <circle r="22" fill="none" stroke="#e2b857" stroke-width="0.7" stroke-dasharray="2 2" />
-                                <circle r="14" fill="none" stroke="#2dd4bf" stroke-width="0.6" />
-                                <polygon points="0,-24 3,-4 24,0 3,4 0,24 -3,4 -24,0 -3,-4" fill="#e2b857" />
-                                <text x="-3" y="-27" fill="#f5d78e" font-size="7" font-family="Cinzel">N</text>
-                            </g>
-
-                            <!-- Continental Shelf Halos -->
-                            <path class="continent-shelf" d="M 48,72 L 155,44 L 285,54 L 315,108 L 282,158 L 238,195 L 188,236 L 150,208 L 112,155 L 42,102 Z" />
-                            <path class="continent-shelf" d="M 442,110 L 580,55 L 895,75 L 928,132 L 845,212 L 732,278 L 625,222 L 444,185 Z" />
-
-                            <!-- DETAILED WORLD CONTINENTS & ISLANDS -->
-                            <!-- 1. North America (Alaska, Canada, Hudson Bay, USA, Baja, Florida, Mexico, Central America) -->
-                            <path class="continent-land" d="M 45,78 L 78,66 L 112,56 L 148,48 L 195,46 L 232,52 L 245,68 L 222,82 L 236,96 L 265,86 L 288,76 L 304,96 L 292,118 L 274,126 L 264,142 L 246,162 L 234,178 L 238,194 L 228,194 L 222,180 L 204,184 L 188,198 L 186,214 L 204,228 L 218,236 L 208,242 L 186,228 L 166,210 L 154,192 L 142,172 L 148,186 L 142,188 L 132,164 L 122,138 L 106,112 L 82,96 L 52,92 Z" />
-                            <!-- Canadian Arctic Islands -->
-                            <path class="continent-land" d="M 195,34 L 228,30 L 242,40 L 212,44 Z" />
-                            <path class="continent-land" d="M 248,32 L 284,26 L 295,44 L 262,48 Z" />
-                            <!-- Great Lakes (Superior, Michigan near Chicago, Huron, Erie, Ontario) -->
-                            <path class="great-lake" d="M 218,132 L 234,130 L 236,138 L 224,148 L 220,145 L 223,137 L 216,136 Z" />
-                            <path class="great-lake" d="M 237,134 L 248,134 L 246,143 L 236,143 Z" />
-
-                            <!-- 2. Greenland -->
-                            <path class="continent-land" d="M 312,28 L 365,22 L 404,32 L 396,62 L 372,82 L 342,92 L 324,74 L 316,52 Z" />
-                            <!-- Iceland -->
-                            <path class="continent-land" d="M 418,74 L 436,72 L 438,82 L 420,84 Z" />
-                            <!-- Caribbean Islands (Cuba, Hispaniola) -->
-                            <path class="continent-land" d="M 228,202 L 252,204 L 250,210 L 226,207 Z" />
-                            <path class="continent-land" d="M 256,208 L 272,208 L 270,214 L 255,213 Z" />
-
-                            <!-- 3. South America -->
-                            <path class="continent-land" d="M 218,242 L 246,238 L 276,248 L 308,266 L 336,288 L 342,316 L 324,352 L 302,388 L 282,424 L 274,452 L 260,450 L 256,422 L 250,382 L 242,342 L 224,308 L 214,276 Z" />
-
-                            <!-- 4. Great Britain & Ireland -->
-                            <path class="continent-land" d="M 462,98 L 472,96 L 476,112 L 478,125 L 460,127 L 463,115 Z" />
-                            <path class="continent-land" d="M 448,110 L 457,108 L 458,122 L 448,123 Z" />
-
-                            <!-- 5. Scandinavia (Norway, Sweden, Finland) -->
-                            <path class="continent-land" d="M 494,82 L 506,62 L 526,46 L 552,44 L 564,58 L 558,82 L 544,94 L 528,96 L 522,106 L 510,104 L 506,90 L 494,92 Z" />
-
-                            <!-- 6. Continental Europe (Iberia, France, Italy, Balkans, Greece, Central & Eastern Europe) -->
-                            <path class="continent-land" d="M 448,154 L 464,148 L 474,136 L 494,126 L 514,116 L 542,110 L 578,106 L 598,116 L 594,146 L 578,156 L 564,154 L 558,166 L 544,174 L 538,184 L 528,178 L 526,166 L 514,164 L 516,178 L 508,182 L 498,168 L 488,164 L 476,168 L 464,174 L 448,172 Z" />
-                            <!-- Sicily & Sardinia -->
-                            <path class="continent-land" d="M 506,184 L 514,184 L 512,190 L 505,189 Z" />
-
-                            <!-- 7. Africa -->
-                            <path class="continent-land" d="M 448,184 L 482,182 L 514,188 L 544,194 L 566,198 L 582,222 L 604,236 L 596,262 L 578,296 L 566,336 L 546,378 L 526,396 L 510,392 L 498,354 L 492,312 L 482,282 L 456,280 L 438,266 L 434,238 L 442,206 Z" />
-                            <!-- Madagascar -->
-                            <path class="continent-land" d="M 586,326 L 596,322 L 598,354 L 586,358 Z" />
-
-                            <!-- 8. Asia (Turkey, Middle East, Arabian Peninsula, Russia, Siberia, India, SE Asia, China, Korea) -->
-                            <path class="continent-land" d="M 556,168 L 586,166 L 596,154 L 598,116 L 638,94 L 695,78 L 762,72 L 835,76 L 908,88 L 936,102 L 912,118 L 886,114 L 874,132 L 854,142 L 848,158 L 834,152 L 832,172 L 818,194 L 792,208 L 774,222 L 778,244 L 766,252 L 758,234 L 744,224 L 724,232 L 708,264 L 696,262 L 682,226 L 664,208 L 642,204 L 622,226 L 594,232 L 574,204 L 586,184 L 558,180 Z" />
-
-                            <!-- 9. Japan, Taiwan, Philippines, Indonesia, New Guinea -->
-                            <path class="continent-land" d="M 866,146 L 876,142 L 878,162 L 864,176 L 856,174 L 866,160 Z" />
-                            <path class="continent-land" d="M 818,214 L 826,214 L 828,234 L 818,236 Z" />
-                            <path class="continent-land" d="M 744,262 L 768,276 L 764,284 L 740,268 Z" />
-                            <path class="continent-land" d="M 772,272 L 798,268 L 802,282 L 774,284 Z" />
-                            <path class="continent-land" d="M 832,276 L 864,282 L 868,294 L 834,288 Z" />
-                            <!-- Sri Lanka -->
-                            <path class="continent-land" d="M 712,268 L 718,268 L 717,276 L 711,275 Z" />
-
-                            <!-- 10. Australia & New Zealand -->
-                            <path class="continent-land" d="M 802,334 L 836,324 L 868,322 L 896,342 L 908,372 L 892,402 L 864,412 L 836,396 L 806,398 L 794,372 Z" />
-                            <path class="continent-land" d="M 926,406 L 938,402 L 942,418 L 924,428 Z" />
-
-                            <!-- TOPOGRAPHIC ELEVATION CONTOURS & MOUNTAIN RANGES -->
-                            <path class="continent-topo" d="M 105,105 L 165,98 L 215,112 L 225,155 L 175,172 L 138,145 Z" />
-                            <path class="continent-topo" d="M 488,142 L 545,132 L 575,148 L 542,162 L 495,158 Z" />
-                            <path class="continent-topo" d="M 645,145 L 745,132 L 815,158 L 775,195 L 695,198 L 642,175 Z" />
-                            <path class="continent-topo" d="M 472,222 L 548,225 L 558,315 L 522,362 L 498,292 Z" />
-
-                            <!-- Mountain Peaks (Rockies, Andes, Alps/Carpathians, Himalayas) -->
-                            <!-- Himalayas -->
-                            <path class="mountain-range" d="M 685,188 L 692,179 L 699,188 L 707,177 L 715,188 L 723,178 L 731,189 L 739,180 L 747,190" />
-                            <!-- Alps & Carpathians -->
-                            <path class="mountain-range" d="M 505,152 L 511,146 L 517,152 L 524,147 L 531,152 L 546,150 L 552,145 L 558,151" />
-                            <!-- Rockies -->
-                            <path class="mountain-range" d="M 132,108 L 138,100 L 144,109 L 150,101 L 156,112 L 162,104 L 168,115" />
-                            <!-- Andes -->
-                            <path class="mountain-range" d="M 248,275 L 254,284 L 249,294 L 256,305 L 252,318 L 259,330 L 255,344" />
-
-                            <!-- Subtle Country Borders -->
-                            <path class="country-border" d="M 122,126 L 218,132" />
-                            <path class="country-border" d="M 154,174 L 204,182" />
-                            <path class="country-border" d="M 464,150 L 478,162" />
-                            <path class="country-border" d="M 538,146 L 564,146 L 562,162 L 542,162 Z" />
-                            <path class="country-border" d="M 678,195 L 728,198 L 724,228" />
-
-                            <!-- Key Region Labels -->
-                            <text class="region-label" x="536" y="143">ROMÂNIA</text>
-                            <text class="region-label" x="688" y="218">INDIA</text>
-                            <text class="region-label" x="172" y="156">S.U.A.</text>
-
-                            <!-- Planned Route Dashed Lines -->
-                            <path class="route-bg-path" d="M 552,156 Q 635,165 712,226" />
-                            <path class="route-bg-path" d="M 712,226 Q 605,70 468,122" />
-                            <path class="route-bg-path" d="M 468,122 Q 445,145 452,168" />
-                            <path class="route-bg-path" d="M 452,168 Q 345,95 226,144" />
-
-                            <!-- Active Drawn Route Segments -->
-                            <path id="seg-0" class="route-active-path" d="M 552,156 Q 635,165 712,226" />
-                            <path id="seg-1" class="route-active-path" d="M 712,226 Q 605,70 468,122" />
-                            <path id="seg-2" class="route-active-path" d="M 468,122 Q 445,145 452,168" />
-                            <path id="seg-3" class="route-active-path" d="M 452,168 Q 345,95 226,144" />
-
-                            <!-- City Nodes -->
-                            <!-- 0: București (552, 156) -->
-                            <g class="city-node" id="node-0" onclick="travelToCity(0)">
-                                <circle cx="552" cy="156" r="18" fill="transparent" />
-                                <circle class="city-pulse" cx="552" cy="156" r="6" />
-                                <circle class="city-dot" cx="552" cy="156" r="6" />
-                                <rect class="city-label-bg" x="562" y="145" width="68" height="20" rx="6" />
-                                <text class="city-label" x="569" y="159">București</text>
-                            </g>
-
-                            <!-- 1: Calcutta (712, 226) -->
-                            <g class="city-node" id="node-1" onclick="travelToCity(1)">
-                                <circle cx="712" cy="226" r="18" fill="transparent" />
-                                <circle class="city-pulse" cx="712" cy="226" r="6" />
-                                <circle class="city-dot" cx="712" cy="226" r="6" />
-                                <rect class="city-label-bg" x="722" y="216" width="62" height="20" rx="6" />
-                                <text class="city-label" x="729" y="230">Calcutta</text>
-                            </g>
-
-                            <!-- 2: Londra (468, 122) -->
-                            <g class="city-node" id="node-2" onclick="travelToCity(2)">
-                                <circle cx="468" cy="122" r="18" fill="transparent" />
-                                <circle class="city-pulse" cx="468" cy="122" r="6" />
-                                <circle class="city-dot" cx="468" cy="122" r="6" />
-                                <rect class="city-label-bg" x="478" y="106" width="56" height="20" rx="6" />
-                                <text class="city-label" x="485" y="120">Londra</text>
-                            </g>
-
-                            <!-- 3: Lisabona (452, 168) -->
-                            <g class="city-node" id="node-3" onclick="travelToCity(3)">
-                                <circle cx="452" cy="168" r="18" fill="transparent" />
-                                <circle class="city-pulse" cx="452" cy="168" r="6" />
-                                <circle class="city-dot" cx="452" cy="168" r="6" />
-                                <rect class="city-label-bg" x="378" y="162" width="64" height="20" rx="6" />
-                                <text class="city-label" x="385" y="176">Lisabona</text>
-                            </g>
-
-                            <!-- 4: Chicago (226, 144) -->
-                            <g class="city-node" id="node-4" onclick="travelToCity(4)">
-                                <circle cx="226" cy="144" r="18" fill="transparent" />
-                                <circle class="city-pulse" cx="226" cy="144" r="6" />
-                                <circle class="city-dot" cx="226" cy="144" r="6" />
-                                <rect class="city-label-bg" x="152" y="132" width="64" height="20" rx="6" />
-                                <text class="city-label" x="159" y="146">Chicago</text>
-                            </g>
+                            <!-- City Nodes Layer -->
+                            <g id="geoCitiesLayer"></g>
 
                             <!-- Animated Traveler Beacon with Sonar Ring -->
-                            <g id="travelerBeacon" transform="translate(552, 156)">
-                                <circle class="beacon-sonar" r="6" fill="none" stroke="#2dd4bf" stroke-width="1.5" />
-                                <circle r="13" fill="rgba(45, 212, 191, 0.22)" />
-                                <circle r="8" fill="rgba(226, 184, 87, 0.48)" />
-                                <circle r="4.8" fill="#ffffff" stroke="#2dd4bf" stroke-width="2" />
+                            <g id="travelerBeacon" transform="translate(550, 150)">
+                                <circle class="beacon-sonar" r="5" fill="none" stroke="#2dd4bf" stroke-width="1.5" />
+                                <circle r="11" fill="rgba(45, 212, 191, 0.24)" />
+                                <circle r="7" fill="rgba(226, 184, 87, 0.5)" />
+                                <circle r="4.2" fill="#ffffff" stroke="#2dd4bf" stroke-width="1.8" />
                             </g>
                         </svg>
                     </div>
@@ -2054,8 +1862,10 @@
         </div>
     </div>
 
-    <!-- Three.js CDN for Background 3D Scene -->
+    <!-- Three.js + D3.js & TopoJSON for Real Geographic World Map -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
 
     <script>
         const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window);
@@ -2161,59 +1971,264 @@
         });
 
         // ==========================================
-        // 2. CINEMATIC TRACKING ZOOM MAP + INSIDE POPOVER
+        // 2. REAL GEOGRAPHIC WORLD MAP (D3 + TOPOJSON) + CINEMATIC ZOOM
         // ==========================================
         const citiesData = [
             {
                 step: 'Etapa 1 din 5 • Punctul de plecare',
                 name: 'București, România',
+                shortName: 'București',
                 years: '1907 – 1928 • 1931 – 1940',
                 desc: 'Orașul natal unde își formează cultura enciclopedică, debutează în presă încă din liceu și devine liderul spiritual al tinerei generații interbelice.',
-                x: 552, y: 156
+                coords: [26.1025, 44.4268], // Real [lon, lat]
+                labelOffset: [9, -11]
             },
             {
                 step: 'Etapa 2 din 5 • Fascinația Orientului',
                 name: 'Calcutta, India',
+                shortName: 'Calcutta',
                 years: '1928 – 1931',
                 desc: 'Studiază filosofia indiană și sanscrita, locuiește în casa profesorului Dasgupta și trăiește povestea care va da naștere capodoperei „Maitreyi”.',
-                x: 712, y: 226
+                coords: [88.3639, 22.5726],
+                labelOffset: [9, -10]
             },
             {
                 step: 'Etapa 3 din 5 • Misiune diplomatică',
                 name: 'Londra, Marea Britanie',
+                shortName: 'Londra',
                 years: '1940 – 1941',
                 desc: 'Activează ca atașat cultural al României la Londra în plin război mondial, continuând cercetările sale asupra simbolurilor și miturilor.',
-                x: 468, y: 122
+                coords: [-0.1276, 51.5072],
+                labelOffset: [9, -14]
             },
             {
                 step: 'Etapa 4 din 5 • Refugiu și creație',
                 name: 'Lisabona, Portugalia',
+                shortName: 'Lisabona',
                 years: '1941 – 1945',
                 desc: 'La țărmul Oceanului Atlantic scrie lucrări fundamentale de istorie a religiilor și reflectează asupra destinului culturii române.',
-                x: 452, y: 168
+                coords: [-9.1393, 38.7223],
+                labelOffset: [-68, -8]
             },
             {
                 step: 'Etapa 5 din 5 • Consacrare universală',
                 name: 'Chicago, Statele Unite',
+                shortName: 'Chicago',
                 years: '1956 – 1986',
                 desc: 'Conduce catedra de Istorie a Religiilor la Universitatea din Chicago, publică mari sinteze științifice și capodoperele sale fantastice.',
-                x: 226, y: 144
+                coords: [-87.6298, 41.8781],
+                labelOffset: [-68, -10]
             }
         ];
 
-        const segmentPaths = [
-            document.getElementById('seg-0'),
-            document.getElementById('seg-1'),
-            document.getElementById('seg-2'),
-            document.getElementById('seg-3')
-        ];
+        // Natural Earth Projection tailored to 1000x500 SVG viewport
+        const projection = d3.geoNaturalEarth1()
+            .scale(192)
+            .translate([490, 265]);
 
-        segmentPaths.forEach(seg => {
-            const len = seg.getTotalLength();
-            seg.style.strokeDasharray = len;
-            seg.style.strokeDashoffset = len;
+        const geoPath = d3.geoPath().projection(projection);
+
+        // Compute exact projected SVG (x, y) for every city
+        citiesData.forEach(city => {
+            const [px, py] = projection(city.coords);
+            city.x = px;
+            city.y = py;
         });
 
+        // Build Map Layers (Graticule, Rivers, Labels, Routes, Cities)
+        function initDetailedWorldMap() {
+            const gratLayer = d3.select('#geoGraticuleLayer');
+            const riversLayer = d3.select('#geoRiversLayer');
+            const labelsLayer = d3.select('#geoLabelsLayer');
+            const routeBgLayer = d3.select('#geoRouteBgLayer');
+            const routeActiveLayer = d3.select('#geoRouteActiveLayer');
+            const citiesLayer = d3.select('#geoCitiesLayer');
+
+            // 1. Graticule (every 15 degrees) + Equator & Tropics
+            const graticule = d3.geoGraticule().step([15, 15]);
+            gratLayer.append('path')
+                .datum(graticule())
+                .attr('class', 'graticule-line')
+                .attr('d', geoPath);
+
+            gratLayer.append('path')
+                .datum({ type: 'LineString', coordinates: [[-180, 0], [180, 0]] })
+                .attr('class', 'equator-line')
+                .attr('d', geoPath);
+
+            [23.436, -23.436].forEach(lat => {
+                gratLayer.append('path')
+                    .datum({ type: 'LineString', coordinates: [[-180, lat], [180, lat]] })
+                    .attr('class', 'tropic-line')
+                    .attr('d', geoPath);
+            });
+
+            // 2. Major World Rivers (Danube, Ganges, Thames, Mississippi, Nile, Amazon)
+            const majorRivers = [
+                // Danube (Germany -> Romania -> Black Sea)
+                [[8.5, 48.0], [13.5, 48.5], [16.4, 48.2], [19.0, 47.5], [20.5, 44.8], [24.0, 43.7], [28.0, 44.3], [29.6, 45.2]],
+                // Ganges (Himalayas -> Calcutta / Bay of Bengal)
+                [[79.0, 30.5], [81.8, 25.4], [85.1, 25.6], [88.3, 22.6], [89.0, 21.8]],
+                // Mississippi (Minnesota -> Gulf of Mexico)
+                [[-94.5, 47.0], [-91.4, 41.5], [-90.2, 38.6], [-90.1, 35.1], [-91.2, 30.4], [-89.2, 29.1]],
+                // Nile
+                [[32.5, 0.5], [32.5, 15.6], [32.9, 24.1], [31.2, 30.0], [31.0, 31.5]],
+                // Amazon
+                [[-75.0, -4.5], [-68.0, -3.5], [-60.0, -3.1], [-54.0, -2.4], [-49.5, -0.5]]
+            ];
+
+            majorRivers.forEach(coords => {
+                riversLayer.append('path')
+                    .datum({ type: 'LineString', coordinates: coords })
+                    .attr('class', 'river-path')
+                    .attr('d', geoPath);
+            });
+
+            // 3. Cartographic Labels (Oceans, Regions, Coordinates)
+            const oceanLabels = [
+                { text: 'OCEANUL ATLANTIC', coords: [-34, 24] },
+                { text: 'OCEANUL INDIAN', coords: [75, -14] },
+                { text: 'OCEANUL PACIFIC', coords: [-140, 12] }
+            ];
+            oceanLabels.forEach(item => {
+                const [lx, ly] = projection(item.coords);
+                labelsLayer.append('text')
+                    .attr('class', 'ocean-label')
+                    .attr('x', lx)
+                    .attr('y', ly)
+                    .text(item.text);
+            });
+
+            const countryLabels = [
+                { text: 'ROMÂNIA', coords: [24.8, 46.2] },
+                { text: 'INDIA', coords: [78.5, 21.5] },
+                { text: 'S.U.A.', coords: [-99.0, 39.0] }
+            ];
+            countryLabels.forEach(item => {
+                const [lx, ly] = projection(item.coords);
+                labelsLayer.append('text')
+                    .attr('class', 'region-label')
+                    .attr('x', lx)
+                    .attr('y', ly)
+                    .text(item.text);
+            });
+
+            const eqPos = projection([-165, 0]);
+            labelsLayer.append('text')
+                .attr('class', 'map-coord-text')
+                .attr('x', eqPos[0])
+                .attr('y', eqPos[1] - 4)
+                .text('ECUATOR 0°');
+
+            // 4. Geodesic Flight Arcs Between Mircea Eliade's Cities
+            for (let i = 0; i < citiesData.length - 1; i++) {
+                const c1 = citiesData[i].coords;
+                const c2 = citiesData[i + 1].coords;
+                const geoArc = { type: 'LineString', coordinates: [c1, c2] };
+
+                routeBgLayer.append('path')
+                    .datum(geoArc)
+                    .attr('class', 'route-bg-path')
+                    .attr('d', geoPath);
+
+                const activeSeg = routeActiveLayer.append('path')
+                    .datum(geoArc)
+                    .attr('id', `seg-${i}`)
+                    .attr('class', 'route-active-path')
+                    .attr('d', geoPath);
+
+                const segNode = activeSeg.node();
+                const len = segNode.getTotalLength();
+                segNode.style.strokeDasharray = len;
+                segNode.style.strokeDashoffset = len;
+            }
+
+            // 5. Interactive City Markers
+            citiesData.forEach((city, idx) => {
+                const g = citiesLayer.append('g')
+                    .attr('class', 'city-node')
+                    .attr('id', `node-${idx}`)
+                    .on('click', () => travelToCity(idx));
+
+                g.append('circle')
+                    .attr('cx', city.x)
+                    .attr('cy', city.y)
+                    .attr('r', 16)
+                    .attr('fill', 'transparent');
+
+                g.append('circle')
+                    .attr('class', 'city-pulse')
+                    .attr('cx', city.x)
+                    .attr('cy', city.y)
+                    .attr('r', 5);
+
+                g.append('circle')
+                    .attr('class', 'city-dot')
+                    .attr('cx', city.x)
+                    .attr('cy', city.y)
+                    .attr('r', 5);
+
+                const boxW = city.shortName.length * 6.5 + 14;
+                const lx = city.x + city.labelOffset[0];
+                const ly = city.y + city.labelOffset[1];
+
+                g.append('rect')
+                    .attr('class', 'city-label-bg')
+                    .attr('x', lx)
+                    .attr('y', ly - 12)
+                    .attr('width', boxW)
+                    .attr('height', 17)
+                    .attr('rx', 5);
+
+                g.append('text')
+                    .attr('class', 'city-label')
+                    .attr('x', lx + 7)
+                    .attr('y', ly)
+                    .text(city.shortName);
+            });
+
+            // Position beacon initially at Bucharest
+            d3.select('#travelerBeacon')
+                .attr('transform', `translate(${citiesData[0].x}, ${citiesData[0].y})`);
+
+            // 6. Load Real World Atlas Countries TopoJSON (110m Natural Earth — all 177 countries)
+            const highlightedIds = new Set(['642', '356', '826', '620', '840']); // Romania, India, UK, Portugal, USA
+
+            fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
+                .then(res => res.json())
+                .then(world => {
+                    const countries = topojson.feature(world, world.objects.countries).features
+                        .filter(d => d.id !== '010'); // Exclude Antarctica for cleaner framing
+                    const landOutline = topojson.mesh(world, world.objects.land);
+
+                    d3.select('#geoCoastGlowLayer')
+                        .append('path')
+                        .datum(landOutline)
+                        .attr('class', 'coastline-glow')
+                        .attr('d', geoPath);
+
+                    d3.select('#geoCountriesLayer')
+                        .selectAll('path')
+                        .data(countries)
+                        .enter()
+                        .append('path')
+                        .attr('class', d => highlightedIds.has(String(d.id)) ? 'country-path highlighted-country' : 'country-path')
+                        .attr('d', geoPath);
+                })
+                .catch(() => {
+                    // Offline fallback land silhouette if CDN unavailable
+                    d3.select('#geoCountriesLayer')
+                        .append('path')
+                        .attr('class', 'country-path')
+                        .attr('d', 'M 75,70 L 285,82 L 245,180 L 185,222 L 105,130 Z M 235,255 L 335,310 L 275,445 L 220,305 Z M 452,145 L 585,115 L 605,158 L 535,185 L 450,176 Z M 455,198 L 575,215 L 535,395 L 442,275 Z M 592,105 L 885,85 L 835,195 L 722,265 L 595,182 Z M 805,335 L 915,385 L 810,405 Z');
+                });
+        }
+
+        initDetailedWorldMap();
+
+        // ==========================================
+        // 3. CINEMATIC TRACKING ZOOM & INSIDE POPOVER
+        // ==========================================
         let currentCityIndex = -1;
         let isAnimatingTravel = false;
         const travelerBeacon = document.getElementById('travelerBeacon');
@@ -2294,10 +2309,12 @@
         }
 
         function setDrawnSegmentsUpTo(targetIdx) {
-            segmentPaths.forEach((seg, segIdx) => {
+            for (let i = 0; i < citiesData.length - 1; i++) {
+                const seg = document.getElementById(`seg-${i}`);
+                if (!seg) continue;
                 const len = seg.getTotalLength();
-                seg.style.strokeDashoffset = (segIdx < targetIdx) ? 0 : len;
-            });
+                seg.style.strokeDashoffset = (i < targetIdx) ? 0 : len;
+            }
         }
 
         function startJourney() {
@@ -2349,11 +2366,11 @@
 
             setTimeout(() => {
                 const isNextStep = (targetIndex === fromIdx + 1);
-                const duration = isNextStep ? 1650 : 1250;
-                const zoomPeak = isMobile ? 2.25 : 2.55;
+                const duration = isNextStep ? 1750 : 1300;
+                const zoomPeak = isMobile ? 2.4 : 2.85;
                 const startTime = performance.now();
 
-                cameraHudText.textContent = `${fromCity.name.split(',')[0]} → ${toCity.name.split(',')[0]}`;
+                cameraHudText.textContent = `${fromCity.shortName} → ${toCity.shortName}`;
                 cameraHud.classList.add('active');
 
                 document.getElementById('node-' + fromIdx).classList.remove('active');
@@ -2363,7 +2380,7 @@
                     setDrawnSegmentsUpTo(targetIndex);
                 }
 
-                const seg = isNextStep ? segmentPaths[fromIdx] : null;
+                const seg = isNextStep ? document.getElementById(`seg-${fromIdx}`) : null;
                 const segLen = seg ? seg.getTotalLength() : 0;
 
                 function animateCinematicTracking(now) {
@@ -2371,14 +2388,14 @@
                     const t = Math.min(elapsed / duration, 1);
                     const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
-                    const zoomEnvelope = Math.pow(Math.sin(Math.PI * t), 0.65);
+                    const zoomEnvelope = Math.pow(Math.sin(Math.PI * t), 0.62);
                     const zoomFactor = 1 + (zoomPeak - 1) * zoomEnvelope;
 
                     const directionSign = (toCity.x >= fromCity.x) ? 1 : -1;
                     const tiltAngle = directionSign * 1.4 * Math.sin(Math.PI * ease);
 
                     let curX, curY;
-                    if (isNextStep) {
+                    if (isNextStep && seg) {
                         seg.style.strokeDashoffset = segLen * (1 - ease);
                         if (t < 1) {
                             const pt = seg.getPointAtLength(segLen * ease);
@@ -2391,7 +2408,7 @@
                     } else {
                         if (t < 1) {
                             curX = fromCity.x + (toCity.x - fromCity.x) * ease;
-                            curY = fromCity.y + (toCity.y - fromCity.y) * ease - Math.sin(Math.PI * ease) * 40;
+                            curY = fromCity.y + (toCity.y - fromCity.y) * ease - Math.sin(Math.PI * ease) * 35;
                         } else {
                             curX = toCity.x;
                             curY = toCity.y;
@@ -2440,7 +2457,7 @@
         }
 
         // ==========================================
-        // 3. QUOTES CAROUSEL
+        // 4. QUOTES CAROUSEL
         // ==========================================
         const quotesList = [
             {
@@ -2478,7 +2495,7 @@
         }
 
         // ==========================================
-        // 4. KEYBOARD & BUTTON SLIDE NAVIGATION
+        // 5. KEYBOARD & BUTTON SLIDE NAVIGATION
         // ==========================================
         const sections = Array.from(document.querySelectorAll('section'));
         const navLinks = document.querySelectorAll('nav a');
@@ -2517,7 +2534,7 @@
         });
 
         // ==========================================
-        // 5. 3D TILT PARALLAX EFFECT (DESKTOP ONLY)
+        // 6. 3D TILT PARALLAX EFFECT (DESKTOP ONLY)
         // ==========================================
         if (!isMobile) {
             document.querySelectorAll('.tilt-card').forEach(card => {
@@ -2539,7 +2556,7 @@
         }
 
         // ==========================================
-        // 6. SCROLL REVEAL & PROGRESS BAR & ACTIVE NAV
+        // 7. SCROLL REVEAL & PROGRESS BAR & ACTIVE NAV
         // ==========================================
         const reveals = document.querySelectorAll('.reveal');
 
@@ -2581,7 +2598,7 @@
         handleScroll();
 
         // ==========================================
-        // 7. MODAL DATA FOR BOOKS
+        // 8. MODAL DATA FOR BOOKS
         // ==========================================
         const booksData = {
             maitreyi: {
@@ -2622,7 +2639,7 @@
         }
 
         // ==========================================
-        // 8. LIGHTBOX FOR GALLERY & BUST
+        // 9. LIGHTBOX FOR GALLERY & BUST
         // ==========================================
         function openLightbox(card) {
             const img = card.querySelector('img');
